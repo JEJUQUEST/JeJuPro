@@ -10,11 +10,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// 정적 파일 및 업로드 경로
+// 정적 파일 및 업로드 경로 설정
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
-// DB 연결
+// DB 연결 함수
 async function connectDB() {
   return await mysql.createConnection({
     host: process.env.DB_HOST || "localhost",
@@ -28,7 +28,6 @@ async function connectDB() {
 //                    API 라우트 정의
 // =======================================================
 
-// 로그인
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const conn = await connectDB();
@@ -66,7 +65,6 @@ const upload = multer({
   },
 });
 
-// 공지 저장
 app.post("/save", upload.single("image"), (req, res) => {
   const { title, content, urgent, author } = req.body;
   const file = req.file;
@@ -104,7 +102,6 @@ app.post("/save", upload.single("image"), (req, res) => {
   }
 });
 
-// 공지 불러오기
 app.get("/notices", (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   res.set('Pragma', 'no-cache');
@@ -126,17 +123,18 @@ app.get("/notices", (req, res) => {
 });
 
 // =======================================================
-//                  SPA 라우팅 처리
+//           SPA 라우팅용 와일드카드 처리
 // =======================================================
-// 모든 GET 요청을 index.html로 처리 (Express 최신 버전 호환)
-app.get('*', function(req, res) {
+
+// 정규식 방식으로 모든 GET 요청을 public/index.html로 리디렉션
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // =======================================================
-//                  서버 실행
+//              Render 환경 포트 바인딩
 // =======================================================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}. Ready to rock!`);
+  console.log(`Server running on port ${PORT}`);
 });
