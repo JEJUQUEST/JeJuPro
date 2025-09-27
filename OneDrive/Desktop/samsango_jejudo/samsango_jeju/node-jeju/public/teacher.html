@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trip Mate – Teacher Dashboard</title>
+<style>
+  :root{
+    --blue:#0D6AC1;
+    --sky:#2E9AFE;
+    --border:#E5E7EB;
+    --text:#111827;
+    --muted:#6B7280;
+    --btn-h:52px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,-apple-system,sans-serif;
+       color:var(--text);background:#fff}
+  header{display:flex;align-items:center;gap:10px;padding:16px;
+         border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:10}
+  header img{width:44px;height:44px;border-radius:10px}
+  header h1{margin:0;font-size:22px;color:var(--blue);font-weight:800}
+
+  .container{padding:16px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
+  .card h2{margin:0 0 12px;font-size:18px}
+
+  /* 오늘 체크인 – 스크롤 표 */
+  .class-list-wrap{border:1px solid var(--border);border-radius:12px;max-height:190px;
+                   overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .row{display:flex;align-items:center;justify-content:space-between;
+       padding:12px 14px;font-size:16px}
+  .row+.row{border-top:1px solid var(--border)}
+  .row .klass{font-weight:700}
+  .row .count{color:#374151}
+
+  /* 공지 리스트(스크롤) */
+  .notice-list-wrap{border:1px solid var(--border);border-radius:12px;max-height:190px;
+                    overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px}
+  .notice-item{display:flex;align-items:center;justify-content:space-between;gap:10px;
+               padding:10px 12px;border:1px solid var(--border);border-radius:10px;
+               margin:8px 0;background:#fff}
+  .notice-item a.title{font-weight:700;color:var(--text);text-decoration:none;flex:1;min-width:0}
+  .notice-item a.title:focus{outline:2px solid var(--sky);outline-offset:2px;border-radius:6px}
+  .notice-item .date{font-size:13px;color:var(--muted);white-space:nowrap}
+
+  /* 요약 카드 */
+  .grid{display:flex;gap:12px}
+  .mini-card{flex:1;border:1px solid var(--border);border-radius:12px;padding:16px;
+             text-align:center;background:#fff}
+  .mini-card h3{margin:0 0 6px;font-size:15px}
+  .mini-card .num{font-size:26px;font-weight:800;letter-spacing:.5px}
+
+  /* 빠른 액션 버튼 */
+  .actions{display:flex;gap:10px;margin-top:16px}
+  .btn{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:var(--btn-h);
+    border:none;
+    border-radius:12px;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    transition:transform .04s ease, opacity .15s ease;
+    text-decoration:none; /* a 태그 기본 제거 */
+    color:#fff;
+  }
+  .btn:active{transform:translateY(1px);opacity:.92}
+  .btn.notice{background:var(--blue)}
+  .btn.schedule{background:var(--sky)}
+  .btn.qna{background:#4B7280}
+
+  @media (min-width:480px){ .container{max-width:480px;margin:0 auto} }
+
+  /* 토스트 */
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+         background:#111827;color:#fff;padding:10px 14px;border-radius:10px;
+         font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+  .toast.show{opacity:1}
+
+  /* 공지 상세 (:target로 토글) */
+  .notice-detail{display:none;border:1px solid var(--border);border-radius:12px;padding:16px}
+  .notice-detail:target{display:block}
+  .notice-detail h3{margin:0 0 6px;font-size:18px}
+  .notice-detail .meta{font-size:13px;color:var(--muted);margin-bottom:10px}
+  .backlink{display:inline-block;margin-top:8px;font-size:14px;color:var(--blue);text-decoration:none}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Trip Mate</h1>
+  </header>
+
+  <main class="container">      <!--wkdjekjdkajdksljdklsjds--->
+    <!-- 오늘 체크인 -->
+    <section class="card">
+      <h2>오늘 체크인</h2>
+      <div class="class-list-wrap" id="classList" role="list" aria-label="반별 체크인 목록"></div>
+    </section>
+
+    <!-- 공지 목록 (스크롤) -->
+    <section class="card">
+      <h2>공지 사항</h2>
+      <div class="notice-list-wrap" id="noticeList" role="list" aria-label="공지 목록"></div>
+      <!-- 클릭 시 이동할 상세 컨테이너 -->
+      <div id="noticeDetails" class="mt16" style="margin-top:12px;"></div>
+    </section>
+
+    <!-- 문의 요약 -->
+    <section class="grid" aria-live="polite">
+      <div class="mini-card">
+        <h3>문의 대기 중</h3>
+        <div class="num" id="pendingCount">0</div>
+      </div>
+      <div class="mini-card">
+        <h3>문의 답변 완료</h3>
+        <div class="num" id="doneCount">0</div>
+      </div>
+    </section>
+
+    <!-- 빠른 액션 -->
+    <section class="actions" aria-label="빠른 작업">
+      <a class="btn notice" href="alarm.html">공지 등록</a>
+      <a class="btn schedule" href="day.html">일정보기</a>
+      <a class="btn qna" href="teacher_qna.html">문의 답변</a>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="teacher.js"></script>
+</body>
+</html>
