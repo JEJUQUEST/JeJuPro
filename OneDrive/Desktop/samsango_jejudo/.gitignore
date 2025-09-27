@@ -1,0 +1,11 @@
+# Node.js
+node_modules/
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/
+
+# OS 파일
+.DS_Store
+Thumbs.db
