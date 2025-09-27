@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trip Mate – 공지 등록</title>
+<style>
+  :root{
+    --blue:#2F6AE5;
+    --border:#E5E7EB;
+    --ink:#111827;
+    --muted:#6B7280;
+    --white:#fff;
+    --gray-soft:#F3F4F6;
+    --radius:12px;
+    --ctrl-h:46px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Noto Sans KR',system-ui,-apple-system,sans-serif;background:#fff;color:var(--ink)}
+  header{display:flex;align-items:center;gap:8px;padding:16px;background:var(--blue);color:#fff;font-weight:700}
+  header a{color:#fff;text-decoration:none;font-size:20px;line-height:1}
+  .container{max-width:480px;margin:0 auto;padding:16px}
+
+  label.title{display:block;margin:18px 0 8px;font-weight:800}
+  .ctrl{width:100%; height:var(--ctrl-h); padding:10px 12px; border:1px solid var(--border);
+        border-radius:var(--radius); font-size:15px; background:var(--white)}
+  textarea.ctrl{height:auto; min-height:120px; resize:vertical; line-height:1.5}
+
+  .row{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+  .radio-wrap{display:flex; align-items:center; gap:8px}
+  .radio-wrap input{width:16px; height:16px}
+
+  .file-wrap{position:relative}
+  .file-wrap input[type="file"]{width:100%; height:var(--ctrl-h); padding:10px 12px; border:1px solid var(--border);
+                                border-radius:var(--radius); background:var(--white)}
+  .hint{font-size:12px; color:var(--muted); margin-top:6px}
+
+  .actions{display:flex; gap:12px; margin-top:20px}
+  .btn{flex:1; height:var(--ctrl-h); border-radius:var(--radius); font-weight:800; font-size:15px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center}
+  .btn.save{background:var(--blue); color:#fff; border:none}
+  .btn.cancel{background:var(--gray-soft); color:var(--ink); border:1px solid var(--border);}
+
+  .ctrl:focus, .btn:focus, select.ctrl:focus{
+    outline:2px solid color-mix(in srgb, var(--blue) 55%, white);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <a href="teacher.html" aria-label="뒤로">←</a>
+    공지 등록
+  </header>
+  <main class="container">
+    <form id="noticeForm">
+      <label class="title" for="title">제목</label>
+      <input id="title" name="title" class="ctrl" type="text" placeholder="제목 입력" required />
+
+      <label class="title" for="content">내용</label>
+      <textarea id="content" name="content" class="ctrl" placeholder="공지 내용을 입력하세요" required></textarea>
+
+      <label class="title">대상</label>
+      <div class="row" role="radiogroup" aria-label="공지 대상">
+        <label class="radio-wrap">
+          <input type="radio" name="target" id="targetAll" value="all" checked /> 전체
+        </label>
+        <label class="radio-wrap">
+          <input type="radio" name="target" id="targetCls" value="class" /> 반 선택
+        </label>
+        <select id="classSelect" name="class" class="ctrl" style="flex:1; min-width:160px" disabled>
+          <option>1반</option><option>2반</option><option>3반</option>
+          <option>4반</option><option>5반</option><option>6반</option>
+          <option>7반</option><option>8반</option>
+        </select>
+      </div>
+
+      <label class="title" for="image">이미지 업로드</label>
+      <div class="file-wrap">
+        <input id="image" name="image" type="file" accept="image/*" class="ctrl" />
+        <div class="hint">PNG/JPG 권장, 5MB 이하</div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn save">저장</button>
+        <button type="button" class="btn cancel" onclick="location.href='teacher.html'">취소</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="alarm.js"></script>
+</body>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trip Mate – 메인</title>
+<style>
+  body {
+    font-family: 'Apple SD Gothic Neo','Noto Sans KR',system-ui,-apple-system,sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #111827;
+  }
+
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* 상단 로고 */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 가운데 정렬 */
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .header img {
+    width: 48px;
+    height: 48px;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+    color: #0D6AC1;
+  }
+
+  /* 카드 공통 */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid #E5E7EB;
+  }
+  .card h2 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  /* 내 배정 */
+  .assignments {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .assign-item {
+    background: #fff;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+  }
+  .assign-item img {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+  }
+  .assign-item strong {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 15px;
+  }
+
+  /* 다음 일정 */
+  .schedule {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .schedule-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .time {
+    background: #E6F0FF;
+    color: #0D6AC1;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 10px 12px;
+    border-radius: 50%;
+  }
+  .schedule-detail {
+    display: flex;
+    flex-direction: column;
+  }
+  .schedule-detail strong {
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+  .link {
+    color: #0D6AC1;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  /* 공지사항 */
+  .notice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .notice-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .notice-left img {
+    width: 22px;
+    height: 22px;
+  }
+  .notice strong {
+    font-size: 15px;
+  }
+
+  /* 하단 버튼 */
+  .footer-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .footer-btn {
+    background: #0D6AC1;
+    padding: 14px;
+    text-align: center;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  .footer-btn:nth-child(1) { background: #2E9AFE; } /* 일정 보기 */
+  .footer-btn:nth-child(2) { background: #0D6AC1; } /* 체크인 */
+  .footer-btn:nth-child(3) { background: #4B7280; } /* 공지 */
+  .footer-btn:nth-child(4) { background: #6B7280; } /* 문의하기 */
+
+  /* 반응형 */
+  @media (max-width: 480px) {
+    .assignments { grid-template-columns: 1fr; }
+    .schedule { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .footer-btns { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <!-- 상단 로고 -->
+    <div class="header">
+      <img src="image/logo2.png" alt="Trip Mate" />
+      <h1>Trip Mate</h1>
+    </div>
+
+    <!-- 내 배정 -->
+    <section class="card">
+      <h2>내 배정</h2>
+      <div class="assignments">
+        <div class="assign-item">
+          <img src="image/icon_bus.png" alt="버스" />
+          <strong>버스</strong>
+          3호차 · 좌석 12A
+        </div>
+        <div class="assign-item">
+          <img src="image/icon_bed.png" alt="숙소" />
+          <strong>숙소</strong>
+          객실 120
+        </div>
+      </div>
+    </section>
+
+    <!-- 다음 일정 -->
+    <section class="card">
+      <h2>다음 일정 <span style="float:right;">☀️ 맑음</span></h2>
+      <div class="schedule">
+        <div class="schedule-left">
+          <div class="time">14:00</div>
+          <div class="schedule-detail">
+            <strong>기념 박물관</strong>
+            해설 투어 · 집합 장소 안내
+          </div>
+        </div>
+        <a class="link" href="#">자세히 보기 &gt;</a>
+      </div>
+    </section>
+
+    <!-- 공지사항 -->
+    <section class="card">
+      <h2>공지 사항 <span style="float:right;">05/10</span></h2>
+      <div class="notice">
+        <div class="notice-left">
+          <img src="image/icon_alarm.png" alt="공지" />
+          <strong>집합 시간 변경 안내</strong>
+        </div>
+        <a class="link" href="#">자세히 보기 &gt;</a>
+      </div>
+    </section>
+
+    <!-- 하단 버튼 -->
+    <div class="footer-btns">
+      <a class="footer-btn" href="day.html">일정 보기</a>
+      <div class="footer-btn">체크인</div>
+      <div class="footer-btn" >공지</div>
+      <a class="footer-btn" href="student_qna.html">문의하기</a>
+    </div>
+  </div>
+</body>
+</html>
