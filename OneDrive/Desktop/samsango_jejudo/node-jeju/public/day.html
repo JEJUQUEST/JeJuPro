@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trip Mate – 일정 보기</title>
+<style>
+  :root{
+    --blue:#2F6AE5; --blue-2:#1E4ACB;
+    --ink:#0F172A; --muted:#6B7280;
+    --line:#E5E7EB; --bg:#F8FAFC; --white:#fff;
+    --radius:16px; --shadow:0 10px 26px rgba(15,23,42,.06);
+    --chip-h:25px; --chip-pad-x:15px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Noto Sans KR',system-ui,-apple-system,sans-serif;
+      color:var(--ink);background:var(--bg)}
+
+  header{position:sticky;top:0;z-index:30;background:var(--white);border-bottom:1px solid var(--line)}
+  .head{max-width:480px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:10px}
+  .title{font-size:18px;font-weight:900;margin:0;flex:1;text-align:center}
+  .back{background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .back svg{stroke:var(--ink)}
+
+  .container{max-width:480px;margin:0 auto;padding:12px 16px 100px}
+
+  /* 칩/버튼 */
+  .chips{display:flex;gap:10px;margin-bottom:14px}
+  .chip{
+    flex:1;
+    height:var(--chip-h);
+    padding:0 var(--chip-pad-x);
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:#fff;color:#1f2937;font-weight:800;
+    display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;user-select:none;white-space:nowrap;
+    text-align:center;
+  }
+  .chip.active{background:var(--blue);border-color:transparent;color:#fff}
+
+  /* 카드 */
+  .card{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;
+        background:#fff;border:1px solid var(--line);border-radius:18px;
+        box-shadow:var(--shadow);padding:16px;margin:12px 0}
+  .thumb{width:110px;height:110px;border-radius:12px;object-fit:cover}
+  .title2{font-size:20px;font-weight:900;margin:0 0 8px}
+  .time{font-weight:900;margin-bottom:6px}
+  .desc{color:var(--muted);font-size:14px}
+  .empty{color:var(--muted);text-align:center;padding:24px 8px}
+</style>
+</head>
+<body>
+  <header>
+    <div class="head">
+      <a href="" class="back" aria-label="메인으로 돌아가기">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24">
+          <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <h1 class="title">일정 보기</h1>
+      <span style="width:24px"></span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 반 그룹 칩 (한 줄) -->
+    <div class="chips" id="classChips">
+      <button class="chip active" data-class="1조">1반 / 4반</button>
+      <button class="chip" data-class="2조">2반 / 7반</button>
+      <button class="chip" data-class="3조">3반 / 6반</button>
+      <button class="chip" data-class="4조">5반 / 8반</button>
+    </div>
+
+    <!-- Day 칩 (한 줄) -->
+    <div class="chips" id="dayChips">
+      <button class="chip active" data-day="1">Day1</button>
+      <button class="chip" data-day="2">Day2</button>
+      <button class="chip" data-day="3">Day3</button>
+      <button class="chip" data-day="4">Day4</button>
+    </div>
+
+    <!-- 일정 목록 -->
+    <div id="list"></div>
+    <div id="empty" class="empty" hidden>해당 조건의 일정이 없어요.</div>
+  </main>
+<script src="day.js"></script>
+</body>
+</html>
