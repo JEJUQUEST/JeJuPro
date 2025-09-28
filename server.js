@@ -7,14 +7,23 @@ const path = require("path");
 const multer = require("multer");
 
 const app = express();
-app.use(bodyParser.json());
-app.use(cors());
 
-// 정적 파일 및 업로드 경로 설정
+// =======================================================
+//                  미들웨어 설정
+// =======================================================
+app.use(bodyParser.json());
+app.use(cors({
+  origin: ['https://www.jeju-quest.shop', 'https://jejupro.onrender.com'], // 허용할 외부 도메인
+  credentials: true
+}));
+
+// 정적 파일 및 업로드 경로
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
-// DB 연결 함수
+// =======================================================
+//                  DB 연결 함수
+// =======================================================
 async function connectDB() {
   return await mysql.createConnection({
     host: process.env.DB_HOST || "localhost",
@@ -25,9 +34,10 @@ async function connectDB() {
 }
 
 // =======================================================
-//                    API 라우트 정의
+//                  API 라우트 정의
 // =======================================================
 
+// 로그인
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const conn = await connectDB();
@@ -65,6 +75,7 @@ const upload = multer({
   },
 });
 
+// 공지 저장
 app.post("/save", upload.single("image"), (req, res) => {
   const { title, content, urgent, author } = req.body;
   const file = req.file;
@@ -102,6 +113,7 @@ app.post("/save", upload.single("image"), (req, res) => {
   }
 });
 
+// 공지 조회
 app.get("/notices", (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   res.set('Pragma', 'no-cache');
@@ -123,11 +135,13 @@ app.get("/notices", (req, res) => {
 });
 
 // =======================================================
-//           SPA 라우팅용 와일드카드 처리
+//             SPA 라우팅용 와일드카드 처리
 // =======================================================
-
-// 정규식 방식으로 모든 GET 요청을 public/index.html로 리디렉션
-app.get(/.*/, (req, res) => {
+app.get('*', (req, res, next) => {
+  // API 경로는 통과
+  if (req.path.startsWith('/login') || req.path.startsWith('/save') || req.path.startsWith('/notices')) {
+    return next();
+  }
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
