@@ -49,47 +49,47 @@ app.post("/login", async (req, res) => {
 
         if (result.rows.length > 0) {
             const user = result.rows[0];
-            const userId = user.id;
-            let assignedClassNo = null;
+            const userId = user.id;
+            let assignedClassNo = null;
 
-            // ✨✨✨ ID 값에 따른 반 분류 로직 (1~22번 제외, 23번부터 1반 시작) ✨✨✨
-            const EXCLUDED_COUNT = 22; // 제외될 1~22번 학생 수
-            const CLASS_SIZE = 28; // 1반~8반의 기준 인원
-            const MAX_STUDENT_ID = 246; // 최대 학생 ID
+            // ✨✨✨ ID 값에 따른 반 분류 로직 (최종 적용) ✨✨✨
+            const EXCLUDED_COUNT = 22; // 제외될 1~22번 학생 수
+            const CLASS_SIZE = 28; // 1반~8반의 기준 인원
+            const MAX_STUDENT_ID = 246; // 최대 학생 ID
 
-            // 1. 관리자/선생님 처리
-            if (user.role === 'admin' || user.role === 'teacher') {
-                 assignedClassNo = 999; // 관리자 전용 코드로 설정
-            }
-            // 2. ID 1번부터 22번까지의 학생 처리 (분류에서 제외)
-            else if (userId >= 1 && userId <= EXCLUDED_COUNT) {
-                assignedClassNo = 998; // 특수 제외 코드 할당
-            }
-            // 3. ID 23번부터 246번까지의 학생 처리 (28명씩 1반부터 8반까지)
-            else if (userId > EXCLUDED_COUNT && userId <= MAX_STUDENT_ID) {
-                // 22명을 제외한 나머지 ID 그룹을 계산합니다.
-                const adjustedId = userId - EXCLUDED_COUNT;
-                
-                // 28로 나누어 그룹 인덱스(0부터 7)를 구한 후, 1을 더해 1반부터 8반으로 설정
-                const groupIndex = Math.floor((adjustedId - 1) / CLASS_SIZE);
-                assignedClassNo = groupIndex + 1; // 1반부터 8반 (0~7 + 1)
-            }
-            // 4. 그 외 ID 처리
-            else {
-                assignedClassNo = -1; // 미분류 오류 코드
-            }
+            // 1. 관리자/선생님 처리
+            if (user.role === 'admin' || user.role === 'teacher') {
+                 assignedClassNo = 999; // 관리자 전용 코드로 설정
+            }
+            // 2. ID 1번부터 22번까지의 학생 처리 (분류에서 제외)
+            else if (userId >= 1 && userId <= EXCLUDED_COUNT) {
+                assignedClassNo = 998; // 특수 제외 코드 할당
+            }
+            // 3. ID 23번부터 246번까지의 학생 처리 (28명씩 1반부터 8반까지)
+            else if (userId > EXCLUDED_COUNT && userId <= MAX_STUDENT_ID) {
+                // 22명을 제외한 나머지 ID 그룹을 계산합니다.
+                const adjustedId = userId - EXCLUDED_COUNT;
+                
+                // 28로 나누어 그룹 인덱스(0부터 7)를 구한 후, 1을 더해 1반부터 8반으로 설정
+                const groupIndex = Math.floor((adjustedId - 1) / CLASS_SIZE);
+                assignedClassNo = groupIndex + 1; // 1반부터 8반 (0~7 + 1)
+            }
+            // 4. 그 외 ID 처리
+            else {
+                assignedClassNo = -1; // 미분류 오류 코드
+            }
 
-            // ✨✨✨ ------------------------------ ✨✨✨
-            
+            // ✨✨✨ ------------------------------ ✨✨✨
+            
             // 클라이언트에게 올바른 classNo를 전달합니다.
-            res.json({ 
-                success: true, 
+            res.json({ 
+                success: true, 
                 role: user.role,
-                user: { 
-                    id: userId,
-                    role: user.role,
-                    classNo: assignedClassNo // 계산된 반 번호를 전달 (1~8 또는 특수 코드)
-                }
+                user: { 
+                    id: userId,
+                    role: user.role,
+                    classNo: assignedClassNo // 계산된 반 번호를 전달 (1~8 또는 특수 코드)
+                }
             });
         } else {
             res.json({ success: false, message: "아이디 또는 비밀번호가 틀렸습니다" });
