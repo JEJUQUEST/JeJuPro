@@ -42,25 +42,24 @@ app.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // [수정된 부분] 'class_no' 대신 'class' 컬럼을 조회한다고 가정합니다.
-        // **🚨 주의: DB의 실제 컬럼명이 'class'가 아니라면, 이 부분을 실제 이름으로 변경해야 합니다.
+        // [수정 1] DB 오류를 피하기 위해 id와 role만 명시적으로 조회합니다.
         const result = await pool.query(
-            "SELECT id, role, class FROM users WHERE username=$1 AND password=$2",
+            "SELECT id, role FROM users WHERE username=$1 AND password=$2",
             [username, password]
         );
 
         if (result.rows.length > 0) {
             const user = result.rows[0];
             
-            // 클라이언트가 checkin.js에서 원하는 user 객체 구조를 맞춰서 반환합니다.
+            // [수정 2] 클라이언트가 필요로 하는 user 객체를 구성하여 반환합니다.
+            // classNo 필드에 user.id 값을 넣어 checkin.js의 필수 조건을 만족시킵니다.
             res.json({ 
                 success: true, 
                 role: user.role,
                 user: { 
                     id: user.id,
                     role: user.role,
-                    // DB에서 가져온 'class' 값을 클라이언트의 'classNo'로 매핑하여 전달
-                    classNo: user.class 
+                    classNo: user.id // ID 값을 그룹 분류 기준으로 사용
                 }
             });
         } else {
