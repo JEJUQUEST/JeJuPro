@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>체크인 UI</title>
+<style>
+  :root{
+    --bg: #ffffff;
+    --text: #0f172a;
+    --muted: #6b7280;
+    --primary: #1060ff;
+    --surface: #f3f4f6;
+    --surface-strong:#e5e7eb;
+    --radius-xxl: 24px;
+    --shadow-1: 0 6px 18px rgba(15,23,42,0.08);
+    --shadow-2: 0 10px 28px rgba(15,23,42,0.10);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo",
+                 "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding: 32px 18px;
+  }
+
+  .checkin{
+    width: 100%;
+    max-width: 520px;
+    display: grid;
+    gap: 20px;
+    text-align: center;
+  }
+
+  /* 상단 바 */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 12px;
+  }
+  .back-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 10px 14px;
+    border: 1px solid var(--surface-strong);
+    background: #fff;
+    border-radius: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: var(--shadow-1);
+  }
+  .back-btn:hover{ box-shadow: var(--shadow-2); transform: translateY(-1px); }
+  .back-btn:active{ transform: translateY(0); }
+  .topbar-title{ font-weight: 900; font-size: 18px; letter-spacing:-0.01em; }
+
+  /* 스케줄 컨테이너 (JS가 img.thumb를 주입) */
+  .schedule img.thumb{
+    display:block;
+    width:100%;
+    height:240px;
+    object-fit:cover;
+    border-radius: var(--radius-xxl);
+    box-shadow: var(--shadow-2);
+    margin-bottom: 10px;
+  }
+
+  .place{
+    font-weight: 800;
+    font-size: clamp(24px, 4.8vw, 36px);
+    letter-spacing: -0.02em;
+  }
+  .time{
+    font-size: clamp(16px, 3.6vw, 20px);
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .sub{
+    font-size: clamp(18px, 4vw, 26px);
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  .actions{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 8px;
+  }
+
+  .btn{
+    border: 0;
+    padding: 16px 18px;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: clamp(17px, 3.8vw, 22px);
+    cursor: pointer;
+    user-select: none;
+    box-shadow: var(--shadow-1);
+    transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease, opacity .12s ease;
+  }
+  .btn.no{
+    background: var(--surface);
+    color: var(--text);
+    outline: 1px solid var(--surface-strong);
+  }
+  .btn.yes{
+    background: var(--primary);
+    color: #fff;
+  }
+  .btn:disabled{ opacity: .7; cursor: default; }
+
+  /* 포커스 효과 */
+  .btn:focus, .back-btn:focus {
+    outline: 3px solid rgba(13, 106, 193, 0.25);
+    outline-offset: 2px;
+  }
+
+  .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-2); }
+  .btn:active { transform: translateY(0); }
+</style>
+</head>
+<body>
+  <main class="checkin">
+    <!-- 상단 바: 뒤로가기 -->
+    <div class="topbar">
+      <button class="back-btn" id="btnBack" type="button" aria-label="뒤로가기">
+        ← 메인으로
+      </button>
+      <div class="topbar-title">체크인</div>
+      <div style="width:96px;"></div> <!-- 우측 균형용 빈칸 -->
+    </div>
+
+    <!-- 스케줄 영역: JS가 이미지/텍스트를 바인딩 -->
+    <section class="schedule">
+      <!-- JS가 필요시 <img class="thumb">를 주입 -->
+      <h1 class="place">불국사</h1>
+      <p class="time">14:00 - 15:00</p>
+    </section>
+
+    <!-- 안내 문구 -->
+    <p class="sub">체크인 처리할까요?</p>
+
+    <!-- 버튼 -->
+    <div class="actions">
+      <button class="btn no" type="button" id="btnNo">아니오</button>
+      <button class="btn yes" type="button" id="btnYes">예</button>
+    </div>
+  </main>
+
+  <!-- 분리한 스크립트 -->
+  <script src="checkin.js"></script>
+</body>
+</html>
