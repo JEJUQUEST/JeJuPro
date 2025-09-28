@@ -1468,7 +1468,7 @@
     "end": "18:30",
     "desc": "학교 도착 및 해산",
     "image": "/image/day_school.png"
-  }
+  },
   {"id":1,"day":1,"class":"4조","title":"학교 집결 및 출발",
   "start":"08:30","end":"09:00","desc":"학교 집결 및 출발", "image": "/image/day_school.png"},
   {"id":2,"day":1,"class":"4조","title":"김해공항으로 이동",
