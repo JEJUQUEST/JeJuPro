@@ -1,5 +1,5 @@
 /* =====================
-   Global 기본 스타일
+   Global
 ===================== */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -19,7 +19,7 @@ body {
 }
 
 /* =====================
-   상단 로고
+   Header
 ===================== */
 .header {
   display: flex;
@@ -37,51 +37,44 @@ body {
 }
 
 /* =====================
-   카드 공통 스타일
+   Card
 ===================== */
 .card {
   background: #fff;
   border-radius: 12px;
-  padding: 28px;
+  padding: 24px;
   margin-bottom: 24px;
   border: 1px solid #E5E7EB;
-  min-height: 140px;
 }
 .card h2 {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   font-size: 20px;
   font-weight: 800;
 }
 
 /* =====================
-   다음 일정
+   Weather (현재 날씨)
 ===================== */
-.schedule {
+.weather-info{
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: 100px;
+  gap: 12px;
+  min-height: 64px;
 }
-.schedule-left { display: flex; align-items: center; gap: 16px; }
-.time {
-  background: #E6F0FF;
-  color: #0D6AC1;
-  font-weight: 800;
+.weather-icon{
+  font-size: 28px;
+  line-height: 1;
+}
+.weather-detail strong{
+  display:block;
   font-size: 18px;
-  padding: 14px 16px;
-  border-radius: 50%;
-}
-.schedule-detail { display: flex; flex-direction: column; }
-.schedule-detail strong { font-size: 19px; margin-bottom: 6px; }
-.link {
-  color: #0D6AC1;
   font-weight: 800;
-  font-size: 16px;
-  text-decoration: none;
+  margin-bottom: 4px;
 }
+.muted{ color:#6B7280; font-size:14px; }
 
 /* =====================
-   공지사항: 스크롤 리스트
+   Notice list
 ===================== */
 .notice-list{
   max-height: 180px;
@@ -109,20 +102,21 @@ body {
 .notice-left strong{
   font-size: 17px;
   font-weight: 800;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .notice-date{
   font-size: 14px;
   color: #6B7280;
   margin-left: 6px;
+  white-space: nowrap;
 }
 
-.notice-item .link{
-  flex-shrink: 0;
-  margin-left: auto;
+.link{
   color: #0D6AC1;
   font-weight: 800;
   font-size: 14px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 /* 스크롤바 얇게 */
@@ -134,7 +128,7 @@ body {
 .notice-list::-webkit-scrollbar-track{ background: transparent; }
 
 /* =====================
-   버튼 디자인 (통일)
+   Footer buttons
 ===================== */
 :root{
   --btn-radius: 14px;
@@ -156,7 +150,7 @@ body {
   margin-top: 20px;
 }
 
-/* a / button 공통 리셋 + 정렬 */
+/* a / button 공통 스타일 */
 .footer-btn{
   -webkit-appearance: none;
   appearance: none;
@@ -183,8 +177,6 @@ body {
   transition: background .15s ease, transform .12s ease, box-shadow .12s ease;
   -webkit-tap-highlight-color: transparent;
 }
-
-/* 아이콘 크기 통일 */
 .footer-btn .ico{
   font-size: var(--btn-ico);
   line-height: 1;
@@ -192,31 +184,19 @@ body {
   align-items: center;
   justify-content: center;
 }
-
-/* 상태 */
 .footer-btn:hover{ background: var(--btn-hover); transform: translateY(-1px); box-shadow: var(--elev-2); }
 .footer-btn:active{ background: var(--btn-active); transform: translateY(0); }
 .footer-btn:focus{ outline: 3px solid rgba(13,106,193,.25); outline-offset: 2px; }
 
-/* 색상 통일 */
-.btn--schedule, .btn--checkin, .btn--notice{ background: var(--btn-color); }
-
-/* 아래 줄 전체폭 버튼 */
-.footer-bottom-row{
-  grid-column: 1 / span 2;
-  display: flex;
-}
-.footer-bottom-row .footer-btn{ width: 100%; }
+/* 색상 (두 버튼 공통) */
+.btn--schedule, .btn--notice{ background: var(--btn-color); }
 
 /* =====================
-   반응형
+   Responsive
 ===================== */
 @media (max-width: 480px){
-  .schedule{ flex-direction: column; align-items: flex-start; gap: 8px; }
-  .footer-bottom-row .footer-btn{ width: 100%; }
+  .footer-btns{ grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 360px){
   .footer-btns{ grid-template-columns: 1fr; }
 }
-message.txt
-5KB
