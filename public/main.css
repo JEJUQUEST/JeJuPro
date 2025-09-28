@@ -1,152 +1,222 @@
+/* =====================
+   Global 기본 스타일
+===================== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #fff;
-      color: #111;
-    }
+  font-family: 'Apple SD Gothic Neo','Noto Sans KR',system-ui,-apple-system,sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+}
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 16px;
-    }
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+}
 
-    /* 상단 로고 */
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
+/* =====================
+   상단 로고
+===================== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.header img { width: 48px; height: 48px; }
+.header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0;
+  color: #0D6AC1;
+}
 
-    .header img {
-      width: 48px;
-      height: 48px;
-    }
+/* =====================
+   카드 공통 스타일
+===================== */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 24px;
+  border: 1px solid #E5E7EB;
+  min-height: 140px;
+}
+.card h2 {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: 800;
+}
 
-    .header h1 {
-      font-size: 24px;
-      font-weight: bold;
-      margin: 0;
-      color: #002f6c;
-    }
+/* =====================
+   다음 일정
+===================== */
+.schedule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100px;
+}
+.schedule-left { display: flex; align-items: center; gap: 16px; }
+.time {
+  background: #E6F0FF;
+  color: #0D6AC1;
+  font-weight: 800;
+  font-size: 18px;
+  padding: 14px 16px;
+  border-radius: 50%;
+}
+.schedule-detail { display: flex; flex-direction: column; }
+.schedule-detail strong { font-size: 19px; margin-bottom: 6px; }
+.link {
+  color: #0D6AC1;
+  font-weight: 800;
+  font-size: 16px;
+  text-decoration: none;
+}
 
-    /* 카드 공통 */
-    .card {
-      background: #f9f9f9;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
+/* =====================
+   공지사항: 스크롤 리스트
+===================== */
+.notice-list{
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.notice-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #E5E7EB;
+}
+.notice-item:first-child{ border-top: none; }
 
-    /* 내 배정 */
-    .assignments {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+.notice-left{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.notice-left img{ width: 26px; height: 26px; }
+.notice-left strong{
+  font-size: 17px;
+  font-weight: 800;
+}
+.notice-date{
+  font-size: 14px;
+  color: #6B7280;
+  margin-left: 6px;
+}
 
-    .assign-item {
-      background: #fff;
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    }
+.notice-item .link{
+  flex-shrink: 0;
+  margin-left: auto;
+  color: #0D6AC1;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none;
+}
 
-    .assign-item img {
-      width: 40px;
-      height: 40px;
-      margin-bottom: 8px;
-    }
+/* 스크롤바 얇게 */
+.notice-list::-webkit-scrollbar{ width: 6px; }
+.notice-list::-webkit-scrollbar-thumb{
+  background: #CBD5E1;
+  border-radius: 8px;
+}
+.notice-list::-webkit-scrollbar-track{ background: transparent; }
 
-    /* 다음 일정 */
-    .schedule {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
+/* =====================
+   버튼 디자인 (통일)
+===================== */
+:root{
+  --btn-radius: 14px;
+  --btn-pad-y: 16px;
+  --btn-pad-x: 16px;
+  --btn-font: 16px;
+  --btn-ico: 18px;
+  --elev-1: 0 2px 8px rgba(0,0,0,0.08);
+  --elev-2: 0 6px 14px rgba(0,0,0,0.12);
+  --btn-color: #3F6FA0;
+  --btn-hover: #355C85;
+  --btn-active: #2C4C72;
+}
 
-    .schedule-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+.footer-btns{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
 
-    .time {
-      background: #e6f0ff;
-      color: #003366;
-      font-weight: bold;
-      padding: 8px 12px;
-      border-radius: 50%;
-    }
+/* a / button 공통 리셋 + 정렬 */
+.footer-btn{
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: var(--btn-color);
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  border-radius: var(--btn-radius);
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  min-height: 56px;
 
-    .schedule-detail {
-      display: flex;
-      flex-direction: column;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
-    .schedule-detail strong {
-      font-size: 16px;
-    }
+  font-weight: 800;
+  font-size: var(--btn-font);
+  line-height: 1.2;
 
-    .link {
-      color: #0056d6;
-      font-weight: bold;
-      font-size: 14px;
-      text-decoration: none;
-    }
+  box-shadow: var(--elev-1);
+  transition: background .15s ease, transform .12s ease, box-shadow .12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    /* 공지사항 */
-    .notice {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+/* 아이콘 크기 통일 */
+.footer-btn .ico{
+  font-size: var(--btn-ico);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .notice-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+/* 상태 */
+.footer-btn:hover{ background: var(--btn-hover); transform: translateY(-1px); box-shadow: var(--elev-2); }
+.footer-btn:active{ background: var(--btn-active); transform: translateY(0); }
+.footer-btn:focus{ outline: 3px solid rgba(13,106,193,.25); outline-offset: 2px; }
 
-    .notice-left img {
-      width: 24px;
-      height: 24px;
-    }
+/* 색상 통일 */
+.btn--schedule, .btn--checkin, .btn--notice{ background: var(--btn-color); }
 
-    /* 하단 버튼 */
-    .footer-btns {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-      gap: 12px;
-    }
+/* 아래 줄 전체폭 버튼 */
+.footer-bottom-row{
+  grid-column: 1 / span 2;
+  display: flex;
+}
+.footer-bottom-row .footer-btn{ width: 100%; }
 
-    .footer-btn {
-      flex: 1;
-      background: #0D6AC1;
-      padding: 14px;
-      text-align: center;
-      border-radius: 12px;
-      font-weight: bold;
-      color: #e5e7eb;
-      cursor: pointer;
-    }
-
-    /* 반응형 */
-    @media (max-width: 480px) {
-      .assignments {
-        grid-template-columns: 1fr;
-      }
-      .schedule {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .footer-btns {
-        flex-direction: column;
-      }
-    }
+/* =====================
+   반응형
+===================== */
+@media (max-width: 480px){
+  .schedule{ flex-direction: column; align-items: flex-start; gap: 8px; }
+  .footer-bottom-row .footer-btn{ width: 100%; }
+}
+@media (max-width: 360px){
+  .footer-btns{ grid-template-columns: 1fr; }
+}
+message.txt
+5KB
