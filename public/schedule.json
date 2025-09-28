@@ -7,7 +7,7 @@
     "start": "07:30",
     "end": "08:00",
     "desc": "학교 집결 및 인원 점검",
-    "image": "/image/day_sch.png"
+    "image": "/image/day_school.png"
   },
   {
     "id": 2,
@@ -27,7 +27,7 @@
     "start": "09:30",
     "end": "11:00",
     "desc": "공항 체크인 / 보안검색 / 탑승 준비",
-    "image":"/image/day_air.png"
+    "image":"image/day_airport.png"
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "start": "11:25",
     "end": "12:25",
     "desc": "김해공항 출발 ▶ 제주공항 도착 (BX8183)",
-    "image":"/image/day_pla.png"
+    "image":"image/day_plane.png"
   },
   {
     "id": 5,
@@ -47,7 +47,7 @@
     "start": "12:35",
     "end": "13:15",
     "desc": "수화물 수령 및 인원 점검 후 차량탑승",
-    "image":"/image/day_su.png"
+    "image":"/image/day_package.png"
   },
   {
     "id": 6,
@@ -57,7 +57,7 @@
     "start": "13:15",
     "end": "13:40",
     "desc": "중식 [오라성]",
-    "image": "/image/day_dduk.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 7,
@@ -77,7 +77,7 @@
     "start": "14:40",
     "end": "15:00",
     "desc": "제주 4.3평화공원",
-    "image": "/image/day_ft.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 9,
@@ -97,7 +97,7 @@
     "start": "16:30",
     "end": "17:20",
     "desc": "노형수퍼마켙",
-    "image": "/image/day_market.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 11,
@@ -147,7 +147,7 @@
     "start": "08:20",
     "end": "08:50",
     "desc": "새별오름",
-    "image": "/image/day_newstar.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 16,
@@ -167,7 +167,7 @@
     "start": "09:50",
     "end": "10:50",
     "desc": "휴애리",
-    "image": "/image/day_gamgule.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 18,
@@ -187,7 +187,7 @@
     "start": "11:50",
     "end": "12:20",
     "desc": "중식 [서귀포올레시장]",
-    "image": "/image/day_streetfood.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 20,
@@ -207,7 +207,7 @@
     "start": "14:20",
     "end": "15:00",
     "desc": "제트보트",
-    "image": "/image/day_jetboat.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 22,
@@ -227,7 +227,7 @@
     "start": "16:00",
     "end": "16:50",
     "desc": "수월봉",
-    "image": "/image/day_suwal.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 24,
@@ -277,7 +277,7 @@
     "start": "08:50",
     "end": "09:00",
     "desc": "오설록 티 뮤지엄",
-    "image": "/image/day_themuseum.png"
+    "image": "/image/day_bus.png"
   },
     {
     "id": 29,
@@ -436,7 +436,8 @@
     "title": "제주공항으로 이동",
     "start": "12:50",
     "end": "13:15",
-    "desc": "제주 공항"
+    "desc": "제주 공항",
+    "image": "/image/day_bus.png"
   },
   {
     "id": 45,
@@ -445,7 +446,8 @@
     "title": "항공 수속 및 탑승",
     "start": "13:15",
     "end": "15:00",
-    "desc": "공항 체크인 / 보안검색 / 탑승 준비"
+    "desc": "공항 체크인 / 보안검색 / 탑승 준비",
+    "image": "/image/day_airport.png"
   },
   {
     "id": 46,
@@ -454,7 +456,8 @@
     "title": "제주 출발 ▶ 부산 도착",
     "start": "15:00",
     "end": "16:10",
-    "desc": "제주공항 출발 ▶ 김해공항 도착 (BX8110)"
+    "desc": "제주공항 출발 ▶ 김해공항 도착 (BX8110)",
+    "image": "/image/day_plane.png"
   },
   {
     "id": 47,
@@ -463,7 +466,8 @@
     "title": "수화물 수령 및 차량 탑승",
     "start": "16:10",
     "end": "16:50",
-    "desc": "수화물 수령 및 인원 점검 후 차량탑승"
+    "desc": "수화물 수령 및 인원 점검 후 차량탑승",
+    "image": "/image/day_package.png"
   },
   {
     "id": 48,
@@ -472,7 +476,8 @@
     "title": "부산 출발 ▶ 울산 도착",
     "start": "16:50",
     "end": "18:00",
-    "desc": "부산 출발 ▶ 울산 도착"
+    "desc": "부산 출발 ▶ 울산 도착",
+    "image": "/image/day_plane.png"
   },
   {
     "id": 49,
@@ -481,7 +486,8 @@
     "title": "학교 도착 및 해산",
     "start": "18:00",
     "end": "18:00",
-    "desc": "학교 도착 및 해산"
+    "desc": "학교 도착 및 해산",
+    "image": "/image/day_school.png"
   },
   {
     "id": 1,
@@ -490,7 +496,8 @@
     "title": "학교 집결 및 출발",
     "start": "07:30",
     "end": "08:00",
-    "desc": "학교 집결 및 인원 점검"
+    "desc": "학교 집결 및 인원 점검",
+    "image": "/image/day_school.png"
   },
   {
     "id": 2,
@@ -499,7 +506,8 @@
     "title": "학교 출발 ▶ 김해공항 도착",
     "start": "08:00",
     "end": "09:30",
-    "desc": "학교 출발 ▶ 김해공항 도착"
+    "desc": "학교 출발 ▶ 김해공항 도착",
+    "image": "/image/day_bus.png"
   },
   {
     "id": 3,
@@ -508,7 +516,8 @@
     "title": "항공 수속 및 탑승",
     "start": "09:30",
     "end": "11:00",
-    "desc": "공항 체크인 / 보안검색 / 탑승 준비"
+    "desc": "공항 체크인 / 보안검색 / 탑승 준비",
+    "image": "/image/day_airport.png"
   },
   {
     "id": 4,
@@ -517,7 +526,8 @@
     "title": "부산 출발 ▶ 제주 도착",
     "start": "11:25",
     "end": "12:25",
-    "desc": "김해공항 출발 ▶ 제주공항 도착(BX8183)"
+    "desc": "김해공항 출발 ▶ 제주공항 도착(BX8183)",
+    "image": "/image/day_plane.png"
   },
   {
     "id": 5,
@@ -526,7 +536,8 @@
     "title": "수화물 수령 및 차량 탑승",
     "start": "12:35",
     "end": "13:15",
-    "desc": "수화물 수령 및 인원 점검 후 차량탑승"
+    "desc": "수화물 수령 및 인원 점검 후 차량탑승",
+    "image": "/image/day_package.png"
   },
   {
     "id": 6,
@@ -536,7 +547,7 @@
     "start": "13:15",
     "end": "13:40",
     "desc": "중식 [오라성]",
-    "image": "/image/day_dduk.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 7,
@@ -576,7 +587,7 @@
     "start": "16:00",
     "end": "16:40",
     "desc": "제주 4.3평화공원",
-    "image": "/image/day_ft.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 11,
@@ -816,7 +827,7 @@
     "start": "14:20",
     "end": "14:40",
     "desc": "아쿠아플라넷",
-    "image": "/image/day_aquarium.png"
+    "image": "/image/day_bus.png"
   },
   {
     "id": 35,
@@ -915,7 +926,8 @@
     "title": "제주공항으로 이동",
     "start": "12:50",
     "end": "13:15",
-    "desc": "제주 공항"
+    "desc": "제주 공항",
+    "image": "/image/day_bus.png"
   },
   {
     "id": 45,
@@ -924,7 +936,8 @@
     "title": "항공 수속 및 탑승",
     "start": "13:15",
     "end": "15:00",
-    "desc": "공항 체크인 / 보안검색 / 탑승 준비"
+    "desc": "공항 체크인 / 보안검색 / 탑승 준비",
+    "image": "/image/day_airport.png"
   },
   {
     "id": 46,
@@ -933,7 +946,8 @@
     "title": "제주 출발 ▶ 부산 도착",
     "start": "15:00",
     "end": "16:10",
-    "desc": "제주공항 출발 ▶ 김해공항 도착 (BX8110)"
+    "desc": "제주공항 출발 ▶ 김해공항 도착 (BX8110)",
+    "image": "/image/day_plane.png"
   },
   {
     "id": 47,
@@ -942,7 +956,8 @@
     "title": "수화물 수령 및 차량 탑승",
     "start": "16:10",
     "end": "16:50",
-    "desc": "수화물 수령 및 인원 점검 후 차량탑승"
+    "desc": "수화물 수령 및 인원 점검 후 차량탑승",
+    "image": "/image/day_package.png"
   },
   {
     "id": 48,
@@ -951,7 +966,8 @@
     "title": "공항 출발 ▶ 학교 도착",
     "start": "16:50",
     "end": "18:00",
-    "desc": "김해공항 출발 ▶ 울산 도착"
+    "desc": "김해공항 출발 ▶ 울산 도착",
+    "image": "/image/day_plane.png"
   },
   {
     "id": 49,
@@ -960,7 +976,8 @@
     "title": "학교 도착 및 해산",
     "start": "18:00",
     "end": "18:00",
-    "desc": "학교 도착 및 해산"
+    "desc": "학교 도착 및 해산",
+    "image": "/image/day_school.png"
   },
   {
     "id": 1,
@@ -970,7 +987,7 @@
     "start": "08:30",
     "end": "09:00",
     "desc": "학교 집결 및 인원 점검",
-    "image": "/image/day_sch.png"
+    "image": "/image/day_school.png"
   },
   {
     "id": 2,
@@ -990,7 +1007,7 @@
     "start": "10:30",
     "end": "12:20",
     "desc": "공항 체크인 / 보안검색 / 탑승 준비",
-    "image": "/image/day_air.png"
+    "image": "/image/day_airport.png"
   },
   {
     "id": 4,
@@ -1000,7 +1017,7 @@
     "start": "12:20",
     "end": "13:20",
     "desc": "김해공항 출발 ▶ 제주공항 도착 (7C505)",
-    "image": "/image/day_pla.png"
+    "image": "/image/day_plane.png"
   },
   {
     "id": 5,
@@ -1010,7 +1027,7 @@
     "start": "13:20",
     "end": "14:00",
     "desc": "수화물 수령 및 인원 점검 후 차량 탑승",
-    "image": "/image/day_su.png"
+    "image": "/image/day_package.png"
   },
   {
     "id": 6,
@@ -1410,7 +1427,7 @@
     "start": "13:00",
     "end": "15:20",
     "desc": "공항 체크인 / 보안검색 / 탑승 준비",
-    "image": "/image/day_air.png"
+    "image": "/image/day_airport.png"
   },
   {
     "id": 46,
@@ -1420,7 +1437,7 @@
     "start": "15:20",
     "end": "16:20",
     "desc": "제주공항 출발 ▶ 김해공항 도착 (7C510)",
-    "image": "/image/day_pla.png"
+    "image": "/image/day_plane.png"
   },
   {
     "id": 47,
@@ -1430,7 +1447,7 @@
     "start": "16:20",
     "end": "17:00",
     "desc": "수화물 수령 및 인원 점검 후 차량탑승",
-    "image": "/image/day_su.png"
+    "image": "/image/day_package.png"
   },
   {
     "id": 48,
@@ -1450,61 +1467,61 @@
     "start": "18:30",
     "end": "18:30",
     "desc": "학교 도착 및 해산",
-    "image": "/image/day_sch.png"
-  },
+    "image": "/image/day_school.png"
+  }
   {"id":1,"day":1,"class":"4조","title":"학교 집결 및 출발",
-  "start":"08:30","end":"09:00","desc":"학교 집결 및 출발"},
+  "start":"08:30","end":"09:00","desc":"학교 집결 및 출발", "image": "/image/day_school.png"},
   {"id":2,"day":1,"class":"4조","title":"김해공항으로 이동",
-  "start":"09:00","end":"10:30","desc":"김해공항으로 이동"},
+  "start":"09:00","end":"10:30","desc":"김해공항으로 이동", "image": "/image/day_bus.png"},
   {"id":3,"day":1,"class":"4조","title":"김해공항 도착 및 탑승 수속",
-  "start":"10:30","end":"12:20","desc":"김해공항 도착 및 탑승 수속"},
+  "start":"10:30","end":"12:20","desc":"김해공항 도착 및 탑승 수속", "image": "/image/day_airport.png"},
   {"id":4,"day":1,"class":"4조","title":"김해 출발 ▶ 제주공항 도착 (7C505)",
-  "start":"12:20","end":"13:20","desc":"김해 출발 ▶ 제주공항 도착 (7C505)"},
+  "start":"12:20","end":"13:20","desc":"김해 출발 ▶ 제주공항 도착 (7C505)", "image": "/image/day_plane.png"},
   {"id":5,"day":1,"class":"4조","title":"수화물 수령 및 인원 점검 후 차량탑승",
-  "start":"13:20","end":"14:00","desc":"수화물 수령 및 인원 점검 후 차량탑승"},
+  "start":"13:20","end":"14:00","desc":"수화물 수령 및 인원 점검 후 차량탑승", "image": "/image/day_package.png"},
   {"id":6,"day":1,"class":"4조","title":"중식 장소로 이동","start":"14:00","end":"14:20","desc":"중식 장소로 이동", "image": "/image/day_hjs.png"},
   {"id":7,"day":1,"class":"4조","title":"중식 [이레한정식] 14시 20분 예약","start":"14:20","end":"15:20","desc":"중식 [이레한정식] 14시 20분 예약", "image": "/image/day_hjs.png"},
   {"id":8,"day":1,"class":"4조","title":"애월카페거리로 이동","start":"15:20","end":"16:10","desc":"애월카페거리로 이동", "image": "/image/day_cafe.png"},
-  {"id":9,"day":1,"class":"4조","title":"애월카페거리 방문","start":"16:10","end":"17:10","desc":"애월카페거리 방문", "image": "/image/day_cafe.png"},
+  {"id":9,"day":1,"class":"4조","title":"01 애월카페거리 방문","start":"16:10","end":"17:10","desc":"01 애월카페거리 방문", "image": "/image/day_cafe.png"},
   {"id":10,"day":1,"class":"4조","title":"노형수퍼마켙으로 이동","start":"17:10","end":"17:30","desc":"노형수퍼마켙으로 이동", "image": "/image/day_market.png"},
-  {"id":11,"day":1,"class":"4조","title":"노형수퍼마켙 방문 17시 30분 예약","start":"17:30","end":"18:30","desc":"노형수퍼마켙 방문 17시 30분 예약", "image": "/image/day_market.png"},
+  {"id":11,"day":1,"class":"4조","title":"02 노형수퍼마켙 방문 17시 30분 예약","start":"17:30","end":"18:30","desc":"02 노형수퍼마켙 방문 17시 30분 예약", "image": "/image/day_market.png"},
   {"id":12,"day":1,"class":"4조","title":"숙소로 이동","start":"18:30","end":"19:00","desc":"숙소로 이동", "image": "/image/day_hotel.png"},
   {"id":13,"day":1,"class":"4조","title":"석식 및 휴식","start":"19:00","end":"19:00","desc":"석식 및 휴식", "image": "/image/day_dinner.png"},
   {"id":14,"day":2,"class":"4조","title":"기상 및 조식","start":"07:50","end":"08:50","desc":"기상 및 조식", "image": "/day_breakfast.png"},
-  {"id":15,"day":2,"class":"4조","title":"오설록으로 이동","start":"08:50","end":"09:00","desc":"오설록으로 이동", "image": "/day_themuseum.png"},
-  {"id":16,"day":2,"class":"4조","title":"오설록 티 뮤지엄 방문","start":"09:00","end":"10:00","desc":"01 오설록 티 뮤지엄 방문", "image": "/day_themuseum.png"},
+  {"id":15,"day":2,"class":"4조","title":"오설록으로 이동","start":"08:50","end":"09:00,"desc":"오설록으로 이동", "image": "/day_themuseum.png"},
+  {"id":16,"day":2,"class":"4조","title":"01 오설록 티 뮤지엄 방문","start":"09:00","end":"10:00","desc":"01 오설록 티 뮤지엄 방문", "image": "/day_themuseum.png"},
   {"id":17,"day":2,"class":"4조","title":"제주라프로 이동","start":"10:00","end":"11:20","desc":"제주라프로 이동", "image": "/image/day_zipline.png"},
-  {"id":18,"day":2,"class":"4조","title":"제주라프 체험 11시 20분 예약","start":"11:20","end":"12:50","desc":"02 제주라프 체험 11시 20분 예약", "image": "/image/day_zipline.png"},
+  {"id":18,"day":2,"class":"4조","title":"02 제주라프 체험 11시 20분 예약","start":"11:20","end":"12:50","desc":"02 제주라프 체험 11시 20분 예약", "image": "/image/day_zipline.png"},
   {"id":19,"day":2,"class":"4조","title":"중식 장소로 이동","start":"12:50","end":"13:20","desc":"중식 장소로 이동", "image": "/image/day_duru.png"},
   {"id":20,"day":2,"class":"4조","title":"중식 [나그네식당] 13시 20분 예약","start":"13:20","end":"14:20","desc":"중식 [나그네식당] 13시 20분 예약", "image": "/image/day_duru.png"},
   {"id":21,"day":2,"class":"4조","title":"아쿠아플라넷으로 이동","start":"14:20","end":"14:40","desc":"아쿠아플라넷으로 이동", "image": "/day_aquarium.png"},
-  {"id":22,"day":2,"class":"4조","title":"아쿠아플라넷 방문 14시 40분 예약","start":"14:40","end":"16:40","desc":"03 아쿠아플라넷 방문 14시 40분 예약", "image": "/day_aquarium.png"},
+  {"id":22,"day":2,"class":"4조","title":"03 아쿠아플라넷 방문 14시 40분 예약","start":"14:40","end":"16:40","desc":"03 아쿠아플라넷 방문 14시 40분 예약", "image": "/day_aquarium.png"},
   {"id":23,"day":2,"class":"4조","title":"숙소로 이동","start":"16:40","end":"18:20","desc":"숙소로 이동", "image": "/image/day_hotel.png"},
   {"id":24,"day":2,"class":"4조","title":"석식 및 휴식","start":"18:20","end":"18:20","desc":"석식 및 휴식", "image": "/image/day_dinner.png"},
   {"id":25,"day":3,"class":"4조","title":"기상 및 조식","start":"07:00","end":"07:50","desc":"기상 및 조식", "image": "/day_breakfast.png"},
   {"id":26,"day":3,"class":"4조","title":"휴애리로 이동","start":"07:50","end":"08:50","desc":"휴애리로 이동", "image": "/day_gamgule.png"},
-  {"id":27,"day":3,"class":"4조","title":"휴애리 방문 9시 예약","start":"08:50","end":"09:50","desc":"01 휴애리 방문 9시 예약", "image": "/day_gamgule.png"},
+  {"id":27,"day":3,"class":"4조","title":"01 휴애리 방문 9시 예약","start":"08:50","end":"09:50","desc":"01 휴애리 방문 9시 예약", "image": "/day_gamgule.png"},
   {"id":28,"day":3,"class":"4조","title":"새별오름으로 이동","start":"09:50","end":"10:50","desc":"새별오름으로 이동", "image": "/image/day_newstar.png"},
-  {"id":29,"day":3,"class":"4조","title":"새별오름 등반","start":"10:50","end":"11:50","desc":"02 새별오름 등반", "image": "/image/day_newstar.png"},
+  {"id":29,"day":3,"class":"4조","title":"02 새별오름 등반","start":"10:50","end":"11:50","desc":"02 새별오름 등반", "image": "/image/day_newstar.png"},
   {"id":30,"day":3,"class":"4조","title":"중식 장소로 이동","start":"11:50","end":"12:40","desc":"중식 장소로 이동"},
   {"id":31,"day":3,"class":"4조","title":"중식 [서귀포올레시장]","start":"12:40","end":"14:40","desc":"중식 [서귀포올레시장]"},
   {"id":32,"day":3,"class":"4조","title":"제트보트로 이동","start":"14:40","end":"15:20","desc":"제트보트로 이동", "image": "/image/day_jetboat.png"},
-  {"id":33,"day":3,"class":"4조","title":"제트보트 체험 14시 40분 예약","start":"15:20","end":"16:20","desc":"제트보트 체험 14시 40분 예약", "image": "/image/day_jetboat.png"},
+  {"id":33,"day":3,"class":"4조","title":"03 제트보트 체험 14시 40분 예약","start":"15:20","end":"16:20","desc":"03 제트보트 체험 14시 40분 예약", "image": "/image/day_jetboat.png"},
   {"id":34,"day":3,"class":"4조","title":"수월봉으로 이동","start":"16:20","end":"17:10","desc":"수월봉으로 이동", "image": "/day_suwal.png"},
-  {"id":35,"day":3,"class":"4조","title":"수월봉 등반","start":"17:10","end":"18:30","desc":"04 수월봉 등반", "image": "/day_suwal.png"},
+  {"id":35,"day":3,"class":"4조","title":"04 수월봉 등반","start":"17:10","end":"18:30","desc":"04 수월봉 등반", "image": "/day_suwal.png"},
   {"id":36,"day":3,"class":"4조","title":"호텔로 이동","start":"18:30","end":"19:00","desc":"호텔로 이동"},
   {"id":37,"day":3,"class":"4조","title":"석식","start":"19:00","end":"20:00","desc":"석식", "image": "/image/day_dinner.png"},
   {"id":38,"day":3,"class":"4조","title":"레크레이션","start":"20:00","end":"21:30","desc":"레크레이션", "image": "/image/day_rec.png"},
   {"id":39,"day":3,"class":"4조","title":"취침","start":"21:30","end":"21:30","desc":"취침", "image": "/image/day_sleep.png"},
   {"id":40,"day":4,"class":"4조","title":"기상 및 조식","start":"07:30","end":"08:30","desc":"기상 및 조식", "image": "/day_breakfast.png"},
   {"id":41,"day":4,"class":"4조","title":"제주 4.3 평화공원로 이동","start":"08:30","end":"09:30","desc":"제주 4.3 평화공원로 이동", "image": "/image/day_ft.png"},
-  {"id":42,"day":4,"class":"4조","title":"제주 4.3 평화공원 방문","start":"09:30","end":"11:00","desc":"01 제주 4.3 평화공원 방문", "image": "/image/day_ft.png"},
+  {"id":42,"day":4,"class":"4조","title":"01 제주 4.3 평화공원 방문","start":"09:30","end":"11:00","desc":"01 제주 4.3 평화공원 방문", "image": "/image/day_ft.png"},
   {"id":43,"day":4,"class":"4조","title":"중식 장소로 이동","start":"11:00","end":"11:30","desc":"중식 장소로 이동", "image": "/image/day_dduk.png"},
   {"id":44,"day":4,"class":"4조","title":"중식 [오라성] 11시 30분 예약","start":"11:30","end":"12:30","desc":"중식 [오라성] 11시 30분 예약", "image": "/image/day_dduk.png"},
-  {"id":45,"day":4,"class":"4조","title":"공항으로 이동","start":"12:30","end":"13:00","desc":"공항으로 이동"},
-  {"id":46,"day":4,"class":"4조","title":"탑승 수속","start":"13:00","end":"15:20","desc":"탑승 수속"},
-  {"id":47,"day":4,"class":"4조","title":"제주공항 출발 ▶ 부산 도착 (7C510)","start":"15:20","end":"16:20","desc":"제주공항 출발 ▶ 부산 도착 (7C510)"},
-  {"id":48,"day":4,"class":"4조","title":"수화물 수령 및 인원 확인","start":"16:20","end":"17:00","desc":"수화물 수령 및 인원 확인"},
-  {"id":49,"day":4,"class":"4조","title":"부산 출발 ▶ 울산 도착","start":"17:00","end":"18:30","desc":"부산 출발 ▶ 울산 도착"},
-  {"id":50,"day":4,"class":"4조","title":"학교 도착 및 해산","start":"18:30","end":"18:30","desc":"학교 도착 및 해산"}
+  {"id":45,"day":4,"class":"4조","title":"공항으로 이동","start":"12:30","end":"13:00","desc":"공항으로 이동", "image": "/image/day_bus.png"},
+  {"id":46,"day":4,"class":"4조","title":"탑승 수속","start":"13:00","end":"15:20","desc":"탑승 수속", "image": "/image/day_airport.png"},
+  {"id":47,"day":4,"class":"4조","title":"제주공항 출발 ▶ 부산 도착 (7C510)","start":"15:20","end":"16:20","desc":"제주공항 출발 ▶ 부산 도착 (7C510)", "image": "/image/day_plane.png"},
+  {"id":48,"day":4,"class":"4조","title":"수화물 수령 및 인원 확인","start":"16:20","end":"17:00","desc":"수화물 수령 및 인원 확인", "image": "/image/day_package.png"},
+  {"id":49,"day":4,"class":"4조","title":"부산 출발 ▶ 울산 도착","start":"17:00","end":"18:30","desc":"부산 출발 ▶ 울산 도착", "image": "/image/day_bus.png"},
+  {"id":50,"day":4,"class":"4조","title":"학교 도착 및 해산","start":"18:30","end":"18:30","desc":"학교 도착 및 해산", "image": "/image/day_school.png"}
 ]
