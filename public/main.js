@@ -15,10 +15,6 @@
         });
       });
 
-      // 3) 체크인 버튼 → checkin.html 로 이동 (확인/알림 없음)
-      document.getElementById('checkinBtn')?.addEventListener('click', () => {
-        location.href = 'checkin.html';
-      });
 
       // 4) 하단 "공지 & 문의" 버튼이 notice.html 로 되어 있어도 student_qna.html 로 보내기
       const noticeBtn = document.querySelector('.footer-btn.btn--notice');
@@ -29,4 +25,5 @@
           noticeBtn.addEventListener('click', () => (location.href = 'student_qna.html'));
         }
       }
+
     })();
