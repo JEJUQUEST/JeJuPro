@@ -1,187 +1,157 @@
-// checkin.js — 일정 바인딩 + 체크인 저장(중복 방지, 시간대 제한)
-// 내일이 Day 1 기준으로 Day 계산
-(function () {
-  'use strict';
+const express = require("express");
+const { Pool } = require("pg");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
+const multer = require("multer");
 
-  const STORAGE_KEY = 'tm_checkins';
-  const ACTIVE_MIN = 30; // 시작 30분 전 ~ 종료 30분 후 허용
-  const MS_DAY = 24 * 60 * 60 * 1000;
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
 
-  const qs = (s, r = document) => r.querySelector(s);
-  const me = () => { try { return JSON.parse(localStorage.getItem('tm_user') || 'null'); } catch { return null; } };
-  const classLabel = () => (me()?.classNo ? `${me().classNo}조` : '1조');
-  const parseMin = (t) => { const m = String(t || '').match(/^(\d{1,2}):(\d{2})$/); return m ? (+m[1]) * 60 + (+m[2]) : -1; };
+// 정적 파일 및 업로드 경로 설정
+app.use(express.static(path.join(__dirname, "public")));
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
-  const $btnYes = qs('#btnYes');
-  const $btnNo = qs('#btnNo');
-  const $btnBack = qs('#btnBack');
-  const $place = qs('.place');
-  const $time = qs('.time');
-  const $sched = qs('.schedule');
+// =======================================================
+//                   PostgreSQL 연결
+// =======================================================
+const DB_CONNECTION_STRING = process.env.DATABASE_URL;
 
-  const SCHEDULE_URL = 'schedule.json'; // 필요 시 '/data/schedule.json' 등으로 수정
+if (!DB_CONNECTION_STRING) {
+    console.error("FATAL ERROR: DATABASE_URL 환경 변수가 설정되지 않았습니다. Render 대시보드에서 설정이 필요합니다.");
+    // 환경 변수 누락 시 서버 시작을 중지하여 런타임 오류 방지
+    process.exit(1); 
+}
 
-  function startOfDay(d) {
-    const x = new Date(d);
-    x.setHours(0, 0, 0, 0);
-    return x;
-  }
+const pool = new Pool({
+    connectionString: DB_CONNECTION_STRING,
+    ssl: { rejectUnauthorized: false } 
+});
 
-  // 내일이 Day 1: 오늘 < 내일 00:00이면 1, 이후는 경과 일수 + 1
-  function computeDayTomorrowIsDay1(maxDay = 4) {
-    const now = new Date();
-    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-    const start = startOfDay(tomorrow);
-    let day;
-    if (now < start) day = 1;
-    else day = Math.floor((now - start) / MS_DAY) + 1;
-    // 스케줄 범위로 클램프
-    day = Math.max(1, Math.min(maxDay, day));
-    return day;
-  }
+pool.on('error', (err) => {
+    console.error('Unexpected error on idle client', err);
+});
 
-  async function pickNextSchedule() {
-    try {
-      const r = await fetch(SCHEDULE_URL, { cache: 'no-store' });
-      const all = r.ok ? await r.json() : [];
-      const listAll = (Array.isArray(all) ? all : []).filter(x => String(x.class).trim() === String(classLabel()));
+// =======================================================
+//                   API 라우트 정의
+// =======================================================
 
-      if (!listAll.length) return null;
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
 
-      // 반별 최대 day 파악 후 "내일=Day1" 로 계산
-      const maxDay = Math.max(...listAll.map(x => Number(x.day) || 1));
-      let day = computeDayTomorrowIsDay1(maxDay);
+    try {
+        // [최종 수정] DB 오류를 피하고 id와 role만 안전하게 조회합니다.
+        const result = await pool.query(
+            "SELECT id, role FROM users WHERE username=$1 AND password=$2",
+            [username, password]
+        );
 
-      const now = new Date();
-      const nowMin = now.getHours() * 60 + now.getMinutes();
+        if (result.rows.length > 0) {
+            const user = result.rows[0];
+            
+            // [최종 수정] 클라이언트가 필수적으로 필요로 하는 user 객체를 반환합니다.
+            // classNo 필드에 user.id 값을 넣어 checkin.js의 필수 조건을 만족시킵니다.
+            res.json({ 
+                success: true, 
+                role: user.role,
+                user: { 
+                    id: user.id,
+                    role: user.role,
+                    classNo: user.id // ID 값을 그룹 분류 기준으로 사용
+                }
+            });
+        } else {
+            res.json({ success: false, message: "아이디 또는 비밀번호가 틀렸습니다" });
+        }
+    } catch (err) {
+        console.error("Login DB Error:", err.message);
+        res.status(500).json({ success: false, message: "서버 오류: 데이터베이스 연결 또는 쿼리 실패" });
+    }
+});
 
-      // 특정 day 목록 정렬
-      const byDay = (d) =>
-        listAll.filter(x => Number(x.day) === Number(d))
-               .sort((a, b) => parseMin(a.start) - parseMin(b.start));
+// Multer 설정
+const uploadDir = path.join(__dirname, "upload");
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
 
-      let todayList = byDay(day);
+const upload = multer({
+    dest: uploadDir,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith("image/")) cb(null, true);
+        else cb(new Error("이미지 파일만 업로드 가능합니다."));
+    },
+});
 
-      // 오늘(해당 day)에서 진행중 또는 다음 일정
-      const pickFrom = (arr) => {
-        if (!arr.length) return null;
-        const running = arr.find(i => {
-          const s = parseMin(i.start), e = parseMin(i.end);
-          if (s < 0) return false;
-          if (e < 0) return nowMin >= s; // 종료 미기입 시 시작 이후면 진행중으로 간주
-          return s <= nowMin && nowMin <= e;
-        });
-        if (running) return running;
-        const upcoming = arr.find(i => parseMin(i.start) >= nowMin);
-        if (upcoming) return upcoming;
-        return null;
-      };
+app.post("/save", upload.single("image"), (req, res) => {
+    const { title, content, urgent, author } = req.body;
+    const file = req.file;
 
-      let target = pickFrom(todayList);
+    const alarmFile = path.join(__dirname, "alarm.json");
+    let notices = [];
 
-      // 오늘(day)에서 남은 게 없으면 다음 day들에서 가장 빠른 일정 선택
-      if (!target) {
-        for (let d = day + 1; d <= maxDay; d++) {
-          const arr = byDay(d);
-          if (arr.length) { target = arr[0]; day = d; break; }
-        }
-      }
+    try {
+        if (fs.existsSync(alarmFile)) {
+            const data = fs.readFileSync(alarmFile, 'utf-8').trim();
+            notices = data ? JSON.parse(data) : [];
+        }
+    } catch (err) {
+        console.error('Error reading alarm.json:', err);
+    }
 
-      // 그래도 없으면 마지막 day의 마지막 일정으로 폴백(또는 null 반환)
-      if (!target) {
-        const lastList = byDay(maxDay);
-        if (lastList.length) target = lastList[lastList.length - 1];
-      }
+    const newNotice = {
+        id: Date.now(),
+        title,
+        content,
+        author,
+        date: new Date().toISOString(),
+        urgent: urgent === 'true' || urgent === true,
+        image: file ? `/upload/${file.filename}` : null
+    };
 
-      return target || null;
-    } catch {
-      return null;
-    }
-  }
+    notices.unshift(newNotice);
 
-  function bindInfo(item) {
-    if (!item) {
-      $place && ($place.textContent = '일정 없음');
-      $time && ($time.textContent = '--:-- - --:--');
-      if ($btnYes) { $btnYes.disabled = true; $btnYes.title = '일정이 없습니다.'; }
-      return;
-    }
+    try {
+        fs.writeFileSync(alarmFile, JSON.stringify(notices, null, 2));
+        res.json({ status: "success", message: "공지 저장 완료" });
+    } catch (err) {
+        console.error('Error writing to alarm.json:', err);
+        res.status(500).json({ status: "error", message: "공지 저장 실패" });
+    }
+});
 
-    $place && ($place.textContent = item.title || item.location || '장소 미정');
-    $time && ($time.textContent = `${item.start || '--:--'} - ${item.end || '--:--'}`);
+app.get("/notices", (req, res) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
 
-    let img = $sched?.querySelector('img.thumb');
-    if (item.image) {
-      if (!img) { img = document.createElement('img'); img.className = 'thumb'; $sched?.prepend(img); }
-      img.src = item.image; img.alt = item.title || '일정 이미지'; img.style.display = '';
-    } else if (img) { img.style.display = 'none'; }
+    const alarmFile = path.join(__dirname, "alarm.json");
 
-    toggleActive(item.start, item.end);
+    try {
+        if (fs.existsSync(alarmFile)) {
+            const data = fs.readFileSync(alarmFile, 'utf-8').trim();
+            res.json(data ? JSON.parse(data) : []);
+        } else {
+            res.json([]);
+        }
+    } catch (err) {
+        console.error('Error reading or parsing alarm.json:', err);
+        res.status(500).json({ status: "error", message: "공지 불러오기 실패" });
+    }
+});
 
-    // 버튼에 메타 저장
-    if ($btnYes) {
-      $btnYes.dataset.scheduleTitle = item.title || '';
-      $btnYes.dataset.scheduleTime = `${item.start}-${item.end}`;
-    }
-  }
+// =======================================================
+//          SPA 라우팅용 와일드카드 처리 (원래 코드로 복원)
+// =======================================================
+app.get(/^\/(?!login|save|notices).*$/, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-  function toggleActive(start, end) {
-    if (!$btnYes) return;
-    const now = new Date(); const nowMin = now.getHours() * 60 + now.getMinutes();
-    const s = parseMin(start), e = parseMin(end);
-    if (s < 0 || e < 0) { $btnYes.disabled = false; $btnYes.title = ''; return; }
-    const active = nowMin >= (s - ACTIVE_MIN) && nowMin <= (e + ACTIVE_MIN);
-    $btnYes.disabled = !active;
-    $btnYes.title = active ? '' : `체크인 가능 시간은 시작 ${ACTIVE_MIN}분 전부터 종료 ${ACTIVE_MIN}분 후까지입니다.`;
-  }
-
-  function getRecs() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; } }
-  function setRecs(a) { localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); }
-  function isDup(userId, title, timeText) {
-    const today = new Date().toDateString();
-    return getRecs().some(r => r.userId === userId && r.title === title && r.timeText === timeText && new Date(r.at).toDateString() === today);
-  }
-
-  async function init() {
-    const target = await pickNextSchedule();
-    bindInfo(target);
-  }
-
-  // 돌아가기/취소
-  function goBack() {
-    if (history.length > 1) history.back();
-    else {
-      const role = localStorage.getItem('role');
-      location.href = (role === 'admin' || role === 'teacher') ? 'teacher.html' : 'main.html';
-    }
-  }
-  $btnNo?.addEventListener('click', goBack);
-  $btnBack?.addEventListener('click', goBack);
-
-  // 체크인 실행
-  $btnYes?.addEventListener('click', () => {
-    const u = me();
-    if (!u?.id) return alert('로그인 정보가 없습니다.');
-    if ($btnYes.disabled) return alert('지금은 체크인 가능 시간대가 아닙니다.');
-
-    const title = $btnYes.dataset.scheduleTitle || ($place?.textContent?.trim() || '');
-    const timeText = $btnYes.dataset.scheduleTime || ($time?.textContent?.trim() || '');
-    if (isDup(u.id, title, timeText)) return alert('이미 체크인되었습니다.');
-    if (!confirm('도착했습니다. 체크인할까요?')) return;
-
-    const recs = getRecs();
-    recs.unshift({
-      id: 'ck_' + Date.now(),
-      userId: u.id,
-      classNo: u.classNo ?? null, // teacher_main에서 반별 집계에 사용
-      title, timeText,
-      at: Date.now()
-    });
-    setRecs(recs);
-
-    alert('체크인 완료! (' + new Date().toLocaleTimeString() + ')');
-    goBack();
-  });
-
-  window.addEventListener('DOMContentLoaded', init);
-})();
+// =======================================================
+//               Render 환경 포트 바인딩
+// =======================================================
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+});
