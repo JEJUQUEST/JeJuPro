@@ -1,5 +1,5 @@
 const express = require("express");
-const { Pool } = require("pg");
+const mysql = require("mysql2/promise");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const fs = require("fs");
@@ -14,33 +14,32 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
-// =======================================================
-//                    PostgreSQL 연결
-// =======================================================
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,  // Render 환경 변수
-  ssl: { rejectUnauthorized: false }           // Render PostgreSQL 권장 설정
-});
-
+// DB 연결 함수
 async function connectDB() {
-  return pool;
+  return await mysql.createConnection({
+    host: process.env.DB_HOST || "localhost",
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASS || "1234",
+    database: process.env.DB_NAME || "memory"
+  });
 }
 
 // =======================================================
 //                    API 라우트 정의
 // =======================================================
+
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const conn = await connectDB();
 
   try {
-    const result = await conn.query(
-      "SELECT * FROM users WHERE username=$1 AND password=$2",
+    const [rows] = await conn.execute(
+      "SELECT * FROM users WHERE username=? AND password=?",
       [username, password]
     );
 
-    if (result.rows.length > 0) {
-      const user = result.rows[0];
+    if (rows.length > 0) {
+      const user = rows[0];
       res.json({ success: true, role: user.role });
     } else {
       res.json({ success: false, message: "아이디 또는 비밀번호가 틀렸습니다" });
@@ -48,12 +47,12 @@ app.post("/login", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "서버 오류" });
+  } finally {
+    await conn.end();
   }
 });
 
-// =======================================================
-//                    Multer 설정
-// =======================================================
+// Multer 설정
 const uploadDir = path.join(__dirname, "upload");
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
 
@@ -126,6 +125,7 @@ app.get("/notices", (req, res) => {
 // =======================================================
 //           SPA 라우팅용 와일드카드 처리 (Render 대응)
 // =======================================================
+
 // /login, /save, /notices 제외한 모든 GET 요청은 index.html
 app.get(/^\/(?!login|save|notices).*$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
