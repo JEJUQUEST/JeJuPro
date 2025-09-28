@@ -27,7 +27,7 @@ function render() {
   $empty.hidden = true;
   $list.innerHTML = items.map(it => `
     <article class="card">
-      <img class="thumb" src="${it.img || ''}" alt="${it.title}">
+      <img class="thumb" src="${it.image || ''}" alt="${it.title}"> 
       <div>
         <h2 class="title2">${it.title}</h2>
         <div class="time">${it.start} - ${it.end}</div>
