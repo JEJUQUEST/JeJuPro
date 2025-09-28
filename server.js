@@ -42,23 +42,25 @@ app.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // [수정 1] 쿼리: id와 class_no(또는 class) 필드를 추가로 선택합니다.
+        // [수정된 부분] 'class_no' 대신 'class' 컬럼을 조회한다고 가정합니다.
+        // **🚨 주의: DB의 실제 컬럼명이 'class'가 아니라면, 이 부분을 실제 이름으로 변경해야 합니다.
         const result = await pool.query(
-            "SELECT id, role, class_no FROM users WHERE username=$1 AND password=$2",
+            "SELECT id, role, class FROM users WHERE username=$1 AND password=$2",
             [username, password]
         );
 
         if (result.rows.length > 0) {
             const user = result.rows[0];
             
-            // [수정 2] 응답: 클라이언트가 tm_user에 저장할 사용자 정보를 객체로 포함하여 반환합니다.
+            // 클라이언트가 checkin.js에서 원하는 user 객체 구조를 맞춰서 반환합니다.
             res.json({ 
                 success: true, 
                 role: user.role,
-                user: { // 클라이언트의 tm_user 저장을 위해 필요한 객체
+                user: { 
                     id: user.id,
                     role: user.role,
-                    classNo: user.class_no // PostgreSQL에서 snake_case를 사용한다고 가정
+                    // DB에서 가져온 'class' 값을 클라이언트의 'classNo'로 매핑하여 전달
+                    classNo: user.class 
                 }
             });
         } else {
