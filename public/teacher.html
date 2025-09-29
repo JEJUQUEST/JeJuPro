@@ -15,59 +15,75 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,-apple-system,sans-serif;
-       color:var(--text);background:#fff}
-  header{display:flex;align-items:center;gap:10px;padding:16px;
-         border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:10}
-  header img{width:44px;height:44px;border-radius:10px}
+  body{
+    margin:0;
+    font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,-apple-system,sans-serif;
+    color:var(--text);
+    background:#fff
+  }
+  header{
+    display:flex;align-items:center;gap:10px;
+    padding:16px;border-bottom:1px solid var(--border);
+    position:sticky;top:0;background:#fff;z-index:10
+  }
   header h1{margin:0;font-size:22px;color:var(--blue);font-weight:800}
 
   .container{padding:16px}
   .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
-  .card h2{margin:0 0 12px;font-size:18px}
+  .card h2{margin:0;font-size:18px}
 
-  /* 오늘 체크인 – 스크롤 표 */
-  .class-list-wrap{border:1px solid var(--border);border-radius:12px;max-height:190px;
-                   overflow-y:auto;-webkit-overflow-scrolling:touch}
-  .row{display:flex;align-items:center;justify-content:space-between;
-       padding:12px 14px;font-size:16px}
-  .row+.row{border-top:1px solid var(--border)}
-  .row .klass{font-weight:700}
-  .row .count{color:#374151}
+  /* 카드 헤더(우측 액션 배치용) */
+  .card-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px
+  }
+  .btn-ghost{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:7px 10px;border:1px solid var(--border);border-radius:8px;
+    background:#fff;color:#9CA3AF;font-weight:700;font-size:13px;
+    text-decoration:none;line-height:1;user-select:none
+  }
+  .btn-ghost:hover{color:#6B7280}
+  .btn-ghost.primary{ color:#0D6AC1; border-color:#B7D2F5 }
 
   /* 공지 리스트(스크롤) */
-  .notice-list-wrap{border:1px solid var(--border);border-radius:12px;max-height:190px;
-                    overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px}
-  .notice-item{display:flex;align-items:center;justify-content:space-between;gap:10px;
-               padding:10px 12px;border:1px solid var(--border);border-radius:10px;
-               margin:8px 0;background:#fff}
-  .notice-item a.title{font-weight:700;color:var(--text);text-decoration:none;flex:1;min-width:0}
+  .notice-list-wrap{
+    border:1px solid var(--border);border-radius:12px;max-height:190px;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px
+  }
+  .notice-item{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 12px;border:1px solid var(--border);border-radius:10px;
+    margin:8px 0;background:#fff
+  }
+  .notice-item .selck{
+    appearance:auto; /* 체크박스 보이기 */
+    transform:scale(1.2);
+    margin-right:2px;
+  }
+  .notice-item a.title{
+    font-weight:700;color:var(--text);text-decoration:none;flex:1;min-width:0
+  }
   .notice-item a.title:focus{outline:2px solid var(--sky);outline-offset:2px;border-radius:6px}
-  .notice-item .date{font-size:13px;color:var(--muted);white-space:nowrap}
+  .notice-item .date{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap}
+
+  /* 선택 모드 툴바 */
+  .notice-select-bar{
+    display:none;gap:8px;justify-content:flex-end;margin:-4px 0 10px 0;
+  }
+  .notice-select-bar.show{ display:flex; }
 
   /* 요약 카드 */
   .grid{display:flex;gap:12px}
-  .mini-card{flex:1;border:1px solid var(--border);border-radius:12px;padding:16px;
-             text-align:center;background:#fff}
+  .mini-card{flex:1;border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;background:#fff}
   .mini-card h3{margin:0 0 6px;font-size:15px}
   .mini-card .num{font-size:26px;font-weight:800;letter-spacing:.5px}
 
   /* 빠른 액션 버튼 */
   .actions{display:flex;gap:10px;margin-top:16px}
   .btn{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    height:var(--btn-h);
-    border:none;
-    border-radius:12px;
-    font-weight:700;
-    font-size:15px;
-    cursor:pointer;
-    transition:transform .04s ease, opacity .15s ease;
-    text-decoration:none; /* a 태그 기본 제거 */
-    color:#fff;
+    flex:1;display:flex;align-items:center;justify-content:center;height:var(--btn-h);
+    border:none;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;
+    transition:transform .04s ease, opacity .15s ease;text-decoration:none;color:#fff
   }
   .btn:active{transform:translateY(1px);opacity:.92}
   .btn.notice{background:var(--blue)}
@@ -77,9 +93,11 @@
   @media (min-width:480px){ .container{max-width:480px;margin:0 auto} }
 
   /* 토스트 */
-  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-         background:#111827;color:#fff;padding:10px 14px;border-radius:10px;
-         font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+  .toast{
+    position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+    background:#111827;color:#fff;padding:10px 14px;border-radius:10px;
+    font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s
+  }
   .toast.show{opacity:1}
 
   /* 공지 상세 (:target로 토글) */
@@ -95,16 +113,23 @@
     <h1>Trip Mate</h1>
   </header>
 
-  <main class="container">      <!--wkdjekjdkajdksljdklsjds--->
-    <!-- 오늘 체크인 -->
-    <section class="card">
-      <h2>오늘 체크인</h2>
-      <div class="class-list-wrap" id="classList" role="list" aria-label="반별 체크인 목록"></div>
-    </section>
+  <main class="container">
+    <!-- (체크인 섹션 삭제됨) -->
 
-    <!-- 공지 목록 (스크롤) -->
+    <!-- 공지 목록 -->
     <section class="card">
-      <h2>공지 사항</h2>
+      <div class="card-head">
+        <h2>공지 사항</h2>
+        <!-- 🔘 회색 "공지 삭제" : 선택 모드 토글 -->
+        <a href="#" id="btnNoticeSelect" class="btn-ghost" aria-label="공지 선택 삭제">공지 삭제</a>
+      </div>
+
+      <!-- 선택 모드 툴바 -->
+      <div id="noticeSelBar" class="notice-select-bar" aria-hidden="true">
+        <a href="#" id="btnDeleteSelected" class="btn-ghost primary">선택 삭제</a>
+        <a href="#" id="btnCancelSelect" class="btn-ghost">취소</a>
+      </div>
+
       <div class="notice-list-wrap" id="noticeList" role="list" aria-label="공지 목록"></div>
       <!-- 클릭 시 이동할 상세 컨테이너 -->
       <div id="noticeDetails" class="mt16" style="margin-top:12px;"></div>
@@ -128,9 +153,12 @@
       <a class="btn schedule" href="day.html">일정보기</a>
       <a class="btn qna" href="teacher_qna.html">문의 답변</a>
     </section>
+
+    <!-- teacher.js가 classList를 참조하더라도 오류가 나지 않도록 보이지 않는 안전장치 -->
+    <div id="classList" style="display:none" aria-hidden="true"></div>
   </main>
 
   <div class="toast" id="toast"></div>
-  <script src="teacher.js"></script>
+  <script src="teacher.js" defer></script>
 </body>
 </html>
