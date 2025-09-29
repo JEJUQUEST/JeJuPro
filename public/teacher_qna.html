@@ -3,159 +3,162 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Trip Mate – 문의 답변</title>
+<title>Trip Mate – Teacher Dashboard</title>
 <style>
   :root{
-    /* palette (images/colors.png) */
-    --sky:#2E9AFE;   /* 액션 */
-    --blue:#0D6AC1;  /* 브랜드 */
-    --muted:#6B7280; /* 보조 텍스트 */
-    --ink:#111827;   /* 본문 */
-    --line:#E5E7EB;  /* 테두리 */
-    --tile:#4B7280;  /* 보조 강조 */
-
+    --blue:#0D6AC1;
+    --sky:#2E9AFE;
+    --border:#E5E7EB;
+    --text:#111827;
+    --muted:#6B7280;
     --btn-h:52px;
-    --radius:14px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,-apple-system,sans-serif;
-      color:var(--ink);background:#fff}
+  body{
+    margin:0;
+    font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,-apple-system,sans-serif;
+    color:var(--text);
+    background:#fff
+  }
+  header{
+    display:flex;align-items:center;gap:10px;
+    padding:16px;border-bottom:1px solid var(--border);
+    position:sticky;top:0;background:#fff;z-index:10
+  }
+  header h1{margin:0;font-size:22px;color:var(--blue);font-weight:800}
 
-  /* Header */
-  header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
-  .head{display:flex;align-items:center;gap:8px;padding:14px 16px;max-width:480px;margin:0 auto}
-  .back{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:#fff;text-decoration:none}
-  .back:active{transform:translateY(1px)}
-  .title{margin:0;flex:1;text-align:center;font-size:18px;font-weight:900;color:var(--blue)}
-  .sp{width:38px}
+  .container{padding:16px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
+  .card h2{margin:0;font-size:18px}
 
-  .container{max-width:480px;margin:0 auto;padding:16px}
+  /* 카드 헤더(우측 액션 배치용) */
+  .card-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px
+  }
+  .btn-ghost{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:7px 10px;border:1px solid var(--border);border-radius:8px;
+    background:#fff;color:#9CA3AF;font-weight:700;font-size:13px;
+    text-decoration:none;line-height:1;user-select:none
+  }
+  .btn-ghost:hover{color:#6B7280}
+  .btn-ghost.primary{ color:#0D6AC1; border-color:#B7D2F5 }
 
-  /* 상단 카운터 타일 */
-  .metrics{display:flex;gap:12px;margin-bottom:14px}
-  .metric{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-  .metric h3{margin:0 0 6px;font-size:14px;color:var(--muted);font-weight:700}
-  .metric .num{font-weight:900;font-size:22px}
+  /* 공지 리스트(스크롤) */
+  .notice-list-wrap{
+    border:1px solid var(--border);border-radius:12px;max-height:190px;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px
+  }
+  .notice-item{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 12px;border:1px solid var(--border);border-radius:10px;
+    margin:8px 0;background:#fff
+  }
+  .notice-item .selck{
+    appearance:auto; /* 체크박스 보이기 */
+    transform:scale(1.2);
+    margin-right:2px;
+  }
+  .notice-item a.title{
+    font-weight:700;color:var(--text);text-decoration:none;flex:1;min-width:0
+  }
+  .notice-item a.title:focus{outline:2px solid var(--sky);outline-offset:2px;border-radius:6px}
+  .notice-item .date{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap}
 
-  /* 탭/검색 */
-  .tabs{display:flex;gap:8px;margin:6px 0 12px}
-  .tab{flex:1;height:44px;border:1px solid var(--line);background:#fff;border-radius:999px;font-weight:800;cursor:pointer}
-  .tab.active{background:var(--blue);border-color:transparent;color:#fff}
-  .search{display:flex;gap:8px;margin-bottom:10px}
-  .search input{flex:1;height:42px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font-size:15px}
-  .search button{height:42px;border:1px solid var(--line);background:#fff;border-radius:12px;font-weight:700;cursor:pointer}
+  /* 선택 모드 툴바 */
+  .notice-select-bar{
+    display:none;gap:8px;justify-content:flex-end;margin:-4px 0 10px 0;
+  }
+  .notice-select-bar.show{ display:flex; }
 
-  /* 목록 */
-  .list{border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .item{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer;background:#fff}
-  .item:last-child{border-bottom:none}
-  .badge{padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800}
-  .badge.wait{background:#fff3f0;color:#c2410c;border:1px solid #fecaca}
-  .badge.done{background:#eefdf3;color:#065f46;border:1px solid #bbf7d0}
-  .title2{margin:0;font-weight:800}
-  .meta{font-size:12px;color:var(--muted)}
-  .grow{flex:1;min-width:0}
-  .ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* 요약 카드 */
+  .grid{display:flex;gap:12px}
+  .mini-card{flex:1;border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;background:#fff}
+  .mini-card h3{margin:0 0 6px;font-size:15px}
+  .mini-card .num{font-size:26px;font-weight:800;letter-spacing:.5px}
 
-  /* 상세 패널 */
-  .panel{position:fixed;inset:0;display:none;background:rgba(17,24,39,.4);z-index:30}
-  .panel.show{display:flex}
-  .sheet{margin:0 auto auto;max-width:480px;width:100%;background:#fff;border-radius:16px 16px 0 0;border:1px solid var(--line)}
-  .sheet header{position:sticky;top:0;border-bottom:1px solid var(--line)}
-  .sheet .hd{display:flex;align-items:center;gap:8px;padding:12px 14px}
-  .sheet h2{margin:0;font-size:16px;font-weight:900;flex:1}
-  .content{padding:14px}
-  .block{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px}
-  .block h4{margin:0 0 8px;font-size:14px;color:var(--muted)}
-  .block p{margin:0;line-height:1.6}
-  textarea{width:100%;min-height:120px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:15px}
-  .actions{display:flex;gap:10px;margin:12px 0 18px}
-  .btn{flex:1;height:var(--btn-h);border:none;border-radius:12px;font-weight:800;cursor:pointer}
-  .btn.primary{background:var(--sky);color:#fff}
-  .btn.success{background:var(--blue);color:#fff}
-  .btn.ghost{background:#F8FAFC;border:1px solid var(--line)}
+  /* 빠른 액션 버튼 */
+  .actions{display:flex;gap:10px;margin-top:16px}
+  .btn{
+    flex:1;display:flex;align-items:center;justify-content:center;height:var(--btn-h);
+    border:none;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;
+    transition:transform .04s ease, opacity .15s ease;text-decoration:none;color:#fff
+  }
+  .btn:active{transform:translateY(1px);opacity:.92}
+  .btn.notice{background:var(--blue)}
+  .btn.schedule{background:var(--sky)}
+  .btn.qna{background:#4B7280}
+
+  @media (min-width:480px){ .container{max-width:480px;margin:0 auto} }
 
   /* 토스트 */
-  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111827;color:#fff;
-        padding:10px 14px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+  .toast{
+    position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+    background:#111827;color:#fff;padding:10px 14px;border-radius:10px;
+    font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s
+  }
   .toast.show{opacity:1}
+
+  /* 공지 상세 (:target로 토글) */
+  .notice-detail{display:none;border:1px solid var(--border);border-radius:12px;padding:16px}
+  .notice-detail:target{display:block}
+  .notice-detail h3{margin:0 0 6px;font-size:18px}
+  .notice-detail .meta{font-size:13px;color:var(--muted);margin-bottom:10px}
+  .backlink{display:inline-block;margin-top:8px;font-size:14px;color:var(--blue);text-decoration:none}
 </style>
 </head>
 <body>
   <header>
-    <div class="head">
-      <a class="back" href="teacher.html" aria-label="메인으로">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <h1 class="title">문의 답변</h1>
-      <span class="sp"></span>
-    </div>
+    <h1>Trip Mate</h1>
   </header>
 
-  <main class="container" aria-live="polite">
-    <!-- 요약 -->
-    <section class="metrics" id="metrics">
-      <div class="metric">
-        <h3>대기 중</h3>
-        <div class="num" id="mWait">0</div>
+  <main class="container">
+    <!-- (체크인 섹션 삭제됨) -->
+
+    <!-- 공지 목록 -->
+    <section class="card">
+      <div class="card-head">
+        <h2>공지 사항</h2>
+        <!-- 🔘 회색 "공지 삭제" : 선택 모드 토글 -->
+        <a href="#" id="btnNoticeSelect" class="btn-ghost" aria-label="공지 선택 삭제">공지 삭제</a>
       </div>
-      <div class="metric">
-        <h3>답변 완료</h3>
-        <div class="num" id="mDone">0</div>
+
+      <!-- 선택 모드 툴바 -->
+      <div id="noticeSelBar" class="notice-select-bar" aria-hidden="true">
+        <a href="#" id="btnDeleteSelected" class="btn-ghost primary">선택 삭제</a>
+        <a href="#" id="btnCancelSelect" class="btn-ghost">취소</a>
+      </div>
+
+      <div class="notice-list-wrap" id="noticeList" role="list" aria-label="공지 목록"></div>
+      <!-- 클릭 시 이동할 상세 컨테이너 -->
+      <div id="noticeDetails" class="mt16" style="margin-top:12px;"></div>
+    </section>
+
+    <!-- 문의 요약 -->
+    <section class="grid" aria-live="polite">
+      <div class="mini-card">
+        <h3>문의 대기 중</h3>
+        <div class="num" id="pendingCount">0</div>
+      </div>
+      <div class="mini-card">
+        <h3>문의 답변 완료</h3>
+        <div class="num" id="doneCount">0</div>
       </div>
     </section>
 
-    <!-- 탭/검색 -->
-    <div class="tabs">
-      <button class="tab active" data-filter="wait">대기</button>
-      <button class="tab" data-filter="done">완료</button>
-      <button class="tab" data-filter="all">전체</button>
-    </div>
-    <div class="search">
-      <input id="q" type="search" placeholder="학생명, 제목으로 검색" />
-      <button id="btnClear">초기화</button>
-    </div>
+    <!-- 빠른 액션 -->
+    <section class="actions" aria-label="빠른 작업">
+      <a class="btn notice" href="alarm.html">공지 등록</a>
+      <a class="btn schedule" href="day.html">일정보기</a>
+      <a class="btn qna" href="teacher_qna.html">문의 답변</a>
+    </section>
 
-    <!-- 목록 -->
-    <section class="list" id="list" role="list" aria-label="문의 목록"></section>
+    <!-- teacher.js가 classList를 참조하더라도 오류가 나지 않도록 보이지 않는 안전장치 -->
+    <div id="classList" style="display:none" aria-hidden="true"></div>
   </main>
 
-  <!-- 상세·답변 패널 -->
-  <aside class="panel" id="panel" aria-hidden="true">
-    <div class="sheet">
-      <header>
-        <div class="hd">
-          <button class="back" id="closePanel" aria-label="닫기">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <h2 id="pTitle">문의 상세</h2>
-        </div>
-      </header>
-      <div class="content">
-        <div class="block">
-          <h4>학생 · 반</h4>
-          <p id="pStudent">-</p>
-        </div>
-        <div class="block">
-          <h4>문의 내용</h4>
-          <p id="pBody">-</p>
-        </div>
-        <div class="block" id="replyBlock">
-          <h4>답변</h4>
-          <textarea id="pReply" placeholder="답변을 입력하세요"></textarea>
-        </div>
-        <div class="actions">
-          <button class="btn ghost" id="btnSave">임시 저장</button>
-          <button class="btn primary" id="btnSend">저장 & 학생에게 전송</button>
-          <button class="btn success" id="btnComplete">완료 처리</button>
-        </div>
-      </div>
-    </div>
-  </aside>
-
   <div class="toast" id="toast"></div>
-
-  <script src="teacher_qna.js"></script>
+  <script src="teacher.js" defer></script>
 </body>
 </html>
