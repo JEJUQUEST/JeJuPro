@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Trip Mate – 메인</title>
-<link rel="stylesheet" href="main.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trip Mate – 메인</title>
+  <link rel="stylesheet" href="main.css" />
 </head>
 <body>
   <div class="container">
@@ -14,25 +14,21 @@
       <h1>Trip Mate</h1>
     </div>
 
-    <!-- 다음 일정 -->
-    <section class="card">
-      <h2>다음 일정 <span style="float:right;">☀️ 맑음</span></h2>
-      <div class="schedule">
-        <div class="schedule-left">
-          <div class="time">14:00</div>
-          <div class="schedule-detail">
-            <strong>기념 박물관</strong>
-            해설 투어 · 집합 장소 안내
-          </div>
+    <!-- 날씨 카드 -->
+    <section class="card" id="weatherCard">
+      <h2>현재 날씨</h2>
+      <div class="weather-info">
+        <div class="weather-icon">☀️</div>
+        <div class="weather-detail">
+          <strong id="weatherStatus">맑음</strong>
+          <div id="weatherDesc" class="muted">기온 23℃ / 바람 약함</div>
         </div>
-        <a class="link" href="#">자세히 보기 &gt;</a>
       </div>
     </section>
 
     <!-- 공지사항 (스크롤 리스트) -->
     <section class="card">
       <h2>공지 사항</h2>
-
       <div class="notice-list">
         <div class="notice-item">
           <div class="notice-left">
@@ -40,7 +36,7 @@
             <strong>집합 시간 변경 안내</strong>
             <span class="notice-date">05/10</span>
           </div>
-          <a class="link" href="#">자세히 보기 &gt;</a>
+          <a class="link" href="student_qna.html">자세히 보기 &gt;</a>
         </div>
 
         <div class="notice-item">
@@ -49,7 +45,7 @@
             <strong>체크인 누락자 재안내</strong>
             <span class="notice-date">05/10</span>
           </div>
-          <a class="link" href="#">자세히 보기 &gt;</a>
+          <a class="link" href="student_qna.html">자세히 보기 &gt;</a>
         </div>
 
         <div class="notice-item">
@@ -58,29 +54,26 @@
             <strong>버스 탑승 위치 변경</strong>
             <span class="notice-date">05/09</span>
           </div>
-          <a class="link" href="#">자세히 보기 &gt;</a>
+          <a class="link" href="student_qna.html">자세히 보기 &gt;</a>
         </div>
       </div>
     </section>
 
     <!-- 하단 버튼 -->
     <div class="footer-btns">
-      <!-- 윗줄: 일정/체크인 (나란히) -->
+      <!-- 윗줄: 일정 / 공지 및 문의 -->
       <a class="footer-btn btn--schedule" href="day.html">
         <span class="ico">🗓️</span><span>일정 보기</span>
       </a>
-    <a class="footer-btn btn--checkin" href="checkin.html">
-        <span class="ico">✅</span><span>체크인</span>
+      <a class="footer-btn btn--notice" href="student_qna.html">
+        <span class="ico">📣</span><span>공지 및 문의</span>
       </a>
-
-      <!-- 아랫줄: 공지 & 문의 (가로 100%) -->
-      <div class="footer-bottom-row">
-        <a class="footer-btn btn--notice" href="notice.html">
-          <span class="ico">📣</span><span>공지 & 문의</span>
-        </a>
-      </div>
     </div>
   </div>
-  <script src="main.js"></script>
+
+  <script>
+    // 예시: 날씨 상태를 바꿀 수 있는 코드 자리
+    // document.getElementById("weatherStatus").textContent = "흐림";
+  </script>
 </body>
 </html>
